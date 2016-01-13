@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1165.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.univ.tlse2.sfr.client.controlleur.ControlleurSimulation">
+   <children>
+      <Pane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <AnchorPane fx:id="simulation" prefHeight="660.0" prefWidth="1125.0">
+               <children>
+                  <Canvas fx:id="canvas_simulation" height="568.0" layoutX="79.0" layoutY="83.0" width="1133.0" />
+                  <AnchorPane layoutX="254.0" layoutY="655.0" prefHeight="64.0" prefWidth="274.0">
+                     <children>
+                        <Button fx:id="play" layoutX="14.0" layoutY="13.0" mnemonicParsing="false" text="Play" />
+                        <Button fx:id="pause" layoutX="70.0" layoutY="13.0" mnemonicParsing="false" text="Pause" />
+                        <Button fx:id="back" layoutX="149.0" layoutY="13.0" mnemonicParsing="false" text="&gt;&gt;" />
+                        <Button fx:id="next" layoutX="204.0" layoutY="13.0" mnemonicParsing="false" text="&lt;&lt;" />
+                     </children>
+                  </AnchorPane>
+               </children></AnchorPane>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

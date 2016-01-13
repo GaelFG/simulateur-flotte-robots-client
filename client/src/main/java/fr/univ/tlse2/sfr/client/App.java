@@ -45,7 +45,7 @@ public class App extends Application {
         try {
             // Load person overview.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(App.class.getResource("vue/Simulation.fxml"));
+            loader.setLocation(App.class.getResource("vue/test.fxml"));
             AnchorPane simulation = (AnchorPane) loader.load();
             // Set person overview into the center of root layout.
             root_layout.setCenter(simulation);
