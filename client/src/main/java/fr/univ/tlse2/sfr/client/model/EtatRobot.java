@@ -7,6 +7,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
+
 /**
  * <b>Classe EtatRobot</b>
  * <p>Cette classe représente la classe EtatRobot de fr.univ.tlse2.sfr.communication
@@ -15,6 +16,7 @@ import javafx.beans.property.SimpleObjectProperty;
  *
  */
 
+@SuppressWarnings("restriction")
 public class EtatRobot {
 	private final IntegerProperty id_robot;
 	private final ObjectProperty<Position> pos_robot;

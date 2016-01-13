@@ -10,12 +10,13 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 
+
 /**
  * Controlleur de la frame simulation
- * @author arthurgorjux
- *
  */
+@SuppressWarnings("restriction")
 public class ControlleurSimulation {
+	
 	@FXML
 	private Button play;
 	
