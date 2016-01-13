@@ -4,3 +4,8 @@
   -fx-padding: 0 0 0 4;
   -fx-background-color: -fx-background;
 }
+
+
+.anchor-pane-border{
+	-fx-border-width : 2.5px;
+}
