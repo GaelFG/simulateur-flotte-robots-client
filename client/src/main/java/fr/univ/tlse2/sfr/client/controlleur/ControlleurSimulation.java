@@ -50,21 +50,32 @@ public class ControlleurSimulation {
 	}
 	
 	private void create_canvas(){
-		
 		double width = canvas_simulation.getWidth();
 		double height = canvas_simulation.getHeight();
 		System.out.println("Width : " + width);
-		System.out.println("Height" + height);
+		System.out.println("Height : " + height);
         GraphicsContext gc = canvas_simulation.getGraphicsContext2D() ;
         gc.clearRect(0, 0, width, height);
-        gc.setStroke(Color.BLUE);
-        for (int x = 0; x < width; x+=10) {
-            gc.strokeLine(x, 0, x, height - (height%10));
+        System.out.println(gc.getFont());
+        
+        gc.setStroke(Color.BLACK);
+        for (int x = 0; x < width; x+=15) {
+            gc.strokeLine(x, 0, x, height - (height%15));
+            if (x % 75 == 0)  {
+            	gc.setLineWidth(2.5);  
+            }else {
+            	 gc.setLineWidth(1);
+			}
         }
         
-        gc.setStroke(Color.RED);
-        for (int y = 0; y < height; y+=10) {
+        gc.setStroke(Color.BLACK);
+        for (int y = 0; y < height; y+=15) {
         	gc.strokeLine(10, y, width, y);
+        	if (y % 75 == 0) {
+            	gc.setLineWidth(2.5);  
+            }else {
+            	 gc.setLineWidth(1);
+			}
         }
 	 }
 }
