@@ -22,6 +22,9 @@ public class ControlleurSimulation {
 	@FXML
 	private Canvas canvas_simulation;
 	
+	@FXML
+	private AnchorPane simulation;
+	
 	
 	private ObservableList<EtatRobot> etat_robot_data = FXCollections.observableArrayList();
 	
@@ -44,10 +47,12 @@ public class ControlleurSimulation {
 		// Handle Button event.
 		play.setOnAction((event) -> {
 			System.out.println("Button Action");
-		});	
+		});			
 		
 		this.create_canvas();
 	}
+	
+
 	
 	private void create_canvas(){
 		double width = canvas_simulation.getWidth();
@@ -59,23 +64,25 @@ public class ControlleurSimulation {
         System.out.println(gc.getFont());
         
         gc.setStroke(Color.BLACK);
-        for (int x = 0; x < width; x+=15) {
-            gc.strokeLine(x, 0, x, height - (height%15));
+        for (int x = 0; x <= width; x+=15) {
             if (x % 75 == 0)  {
             	gc.setLineWidth(2.5);  
             }else {
             	 gc.setLineWidth(1);
 			}
+            gc.strokeLine(x, 0, x, height - (height%15));
         }
         
         gc.setStroke(Color.BLACK);
-        for (int y = 0; y < height; y+=15) {
-        	gc.strokeLine(10, y, width, y);
+        for (int y = 0; y <= height; y+=15) {        	
         	if (y % 75 == 0) {
+        		System.out.println("y : " + y);
             	gc.setLineWidth(2.5);  
             }else {
             	 gc.setLineWidth(1);
 			}
+        	
+        	gc.strokeLine(0, y, width - (width%15), y);
         }
 	 }
 }

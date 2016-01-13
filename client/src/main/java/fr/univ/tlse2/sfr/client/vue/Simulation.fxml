@@ -6,23 +6,19 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1200.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.univ.tlse2.sfr.client.controlleur.ControlleurSimulation">
-   <children>
-      <Pane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <AnchorPane fx:id="simulation" prefHeight="1200.0" prefWidth="1200.0">
-               <children>
-                  <Canvas fx:id="canvas_simulation" height="1200.0" layoutX="1.0" layoutY="4.0" width="1200.0" />
-               </children></AnchorPane>
-            <AnchorPane layoutY="1200.0" prefHeight="35.0" prefWidth="1125.0">
-               <children>
-                  <Button fx:id="play" layoutX="117.0" layoutY="30.0" mnemonicParsing="false" text="Play" AnchorPane.bottomAnchor="10.0" AnchorPane.topAnchor="10.0" />
-                  <Button layoutX="210.0" layoutY="30.0" mnemonicParsing="false" text="Pause" AnchorPane.bottomAnchor="10.0" AnchorPane.topAnchor="10.0" />
-                  <Button layoutX="318.0" layoutY="26.0" mnemonicParsing="false" text="&gt;&gt;" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
-                  <Button layoutX="23.0" layoutY="31.0" mnemonicParsing="false" text="&lt;&lt;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
-               </children>
-            </AnchorPane>
-         </children>
-      </Pane>
-   </children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800" prefWidth="1175" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.univ.tlse2.sfr.client.controlleur.ControlleurSimulation">
+     <children>
+        <AnchorPane fx:id="simulation" prefHeight="750.0" prefWidth="1125">
+           <children>
+              <Canvas fx:id="canvas_simulation" height="750.0" layoutX="1.0" layoutY="4.0" width="1125.0" />
+           </children></AnchorPane>
+        <AnchorPane layoutY="750.0" prefHeight="35.0" prefWidth="1125.0">
+           <children>
+              <Button fx:id="play" layoutX="117.0" layoutY="30.0" mnemonicParsing="false" text="Play" AnchorPane.bottomAnchor="10.0" AnchorPane.topAnchor="10.0" />
+              <Button layoutX="210.0" layoutY="30.0" mnemonicParsing="false" text="Pause" AnchorPane.bottomAnchor="10.0" AnchorPane.topAnchor="10.0" />
+              <Button layoutX="318.0" layoutY="26.0" mnemonicParsing="false" text="&gt;&gt;" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+              <Button layoutX="23.0" layoutY="31.0" mnemonicParsing="false" text="&lt;&lt;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
+           </children>
+        </AnchorPane>
+     </children>
 </AnchorPane>
