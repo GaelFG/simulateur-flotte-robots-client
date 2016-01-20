@@ -20,19 +20,12 @@ import javafx.fxml.FXMLLoader;
 @SuppressWarnings("restriction")
 public class App extends Application {
 	
-	private Client connecteur_kryo;
-	private List<EtatSimulation> buffer_etats_simulation;
 	private Stage primary_stage;
 	private BorderPane root_layout;
-	
 	
 	@Override
 	public void start(Stage primaryStage) {
 		
-		buffer_etats_simulation = Collections.synchronizedList(new LinkedList<EtatSimulation>());
-		initialiser_connecteur_kryo("127.0.0.1", 8073);
-		connecteur_kryo.sendTCP(new DemarrerSimulation("mon test réseau !"));
-
 		this.primary_stage = primaryStage;
         this.primary_stage.setTitle("IHM Simulation Flotte Robots");
         this.init_root_layout();
@@ -70,22 +63,5 @@ public class App extends Application {
 	
 	public static void main(String[] args) {
 		launch(args);
-	}
-	
-	private void initialiser_connecteur_kryo(String url_serveur, int port_tcp) {
-		connecteur_kryo = new Client();
-		connecteur_kryo.start();
-		EnregistreurKryo.enregistrerLesClassesDeCommunication(connecteur_kryo.getKryo());
-		definir_ecouteur_kryo();
-		try {
-			connecteur_kryo.connect(5000, url_serveur, port_tcp);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-	}
-	
-	private void definir_ecouteur_kryo() {
-		connecteur_kryo.addListener(new EcouteurReseau(buffer_etats_simulation));
 	}
 }
