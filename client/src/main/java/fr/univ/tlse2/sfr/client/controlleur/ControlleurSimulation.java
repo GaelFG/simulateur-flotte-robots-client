@@ -63,6 +63,9 @@ public class ControlleurSimulation {
         gc.clearRect(0, 0, width, height);
         System.out.println(gc.getFont());
         
+        gc.setStroke(Color.GREEN);
+        gc.strokeLine(50, 50, 50, 50);
+        
         gc.setStroke(Color.BLACK);
         for (int x = 0; x <= width; x+=15) {
             if (x % 75 == 0)  {
