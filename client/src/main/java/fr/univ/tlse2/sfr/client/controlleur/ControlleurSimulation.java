@@ -117,6 +117,9 @@ public class ControlleurSimulation {
         GraphicsContext gc = canvas_simulation.getGraphicsContext2D() ;
         gc.clearRect(0, 0, width, height);
         
+        gc.setStroke(Color.GREEN);
+        gc.strokeLine(50, 50, 50, 50);
+        
         gc.setStroke(Color.BLACK);
         for (int x = 0; x <= width; x+=15) {
             if (x % 75 == 0)  {
