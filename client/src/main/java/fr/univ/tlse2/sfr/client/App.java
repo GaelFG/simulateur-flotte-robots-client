@@ -1,12 +1,15 @@
 package fr.univ.tlse2.sfr.client;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
 import com.esotericsoftware.kryonet.Client;
+import com.sun.corba.se.impl.ior.GenericTaggedComponent;
 
+import fr.univ.tlse2.sfr.client.controlleur.ControlleurSimulation;
 import fr.univ.tlse2.sfr.client.vue.GridPane;
 import fr.univ.tlse2.sfr.communication.DemarrerSimulation;
 import fr.univ.tlse2.sfr.communication.EnregistreurKryo;
@@ -16,12 +19,14 @@ import fr.univ.tlse2.sfr.communication.EtatSimulation;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.JavaFXBuilderFactory;
 
 @SuppressWarnings("restriction")
 public class App extends Application {
@@ -40,6 +45,7 @@ public class App extends Application {
 		this.primary_stage = primaryStage;
         this.primary_stage.setTitle("IHM Simulation Flotte Robots");
         this.init_root_layout();
+        show_simulation();
         this.primary_stage.show();
 	}
 	
@@ -65,21 +71,21 @@ public class App extends Application {
 		buffer_etats_simulation = Collections.synchronizedList(new LinkedList<EtatSimulation>());
 		initialiser_connecteur_kryo("127.0.0.1", 8073);
 		connecteur_kryo.sendTCP(new DemarrerSimulation("mon test rÃ©seau !"));
-		while(buffer_etats_simulation.isEmpty()){
-			try {
-				Thread.sleep(1);
-			} catch (InterruptedException e) {}
-		}
-		// initialize map
-		//this.carte = buffer_etats_simulation.get(0).carte;
-		//return new GridPane(carte, buffer_etats_simulation);
+
         try {
-            // Load person overview.
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(App.class.getResource("vue/test.fxml"));
-            AnchorPane simulation = (AnchorPane) loader.load();
-            
+            URL location = getClass().getResource("vue/test.fxml");
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(location);
+            fxmlLoader.setBuilderFactory(new JavaFXBuilderFactory());
+
+            AnchorPane simulation = (AnchorPane) fxmlLoader.load(location.openStream());
             root_layout.setCenter(simulation);
+
+    		//ajouter l'ecouteur reseau adapté
+            ControlleurSimulation controleur_affichage_simulation = fxmlLoader.getController();
+            connecteur_kryo.addListener(new EcouteurReseauAffichageSimulation(controleur_affichage_simulation));
+            
+            
         } catch (IOException e) {
             e.printStackTrace();
         }

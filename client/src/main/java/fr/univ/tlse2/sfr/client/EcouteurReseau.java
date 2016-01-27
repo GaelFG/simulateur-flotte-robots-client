@@ -21,11 +21,6 @@ public class EcouteurReseau extends Listener{
 	
 	/** Réagit à la reception d'un objet sérialisé. */
 	 public void received (Connection connection, Object object) {
-
-		 if (object instanceof EtatSimulation) {
-			 EtatSimulation etat_simulation = (EtatSimulation)object;
-			 buffer_etats_simulation.add(etat_simulation);
-         }
 		 
 		 if (object instanceof MessageTexte) {
        	  MessageTexte message = (MessageTexte)object;
