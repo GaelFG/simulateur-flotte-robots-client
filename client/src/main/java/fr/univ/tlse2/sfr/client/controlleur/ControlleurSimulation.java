@@ -66,11 +66,13 @@ public class ControlleurSimulation {
         gc.clearRect(0, 0, width, height);
 		// Dessiner la carte
         gc.setStroke(Color.BLACK);
-        for(int x = 0; x < height-1; x++){
-        	for(int y = 0; y < width-1; y++){ 		
-        		gc.strokeLine(x, y, 5, 5);
-        	}
+        for(int x = 0; x < width - 1; x = x+ 25){
+        	gc.strokeLine(x, 0, x, height);
         }
+        
+        for(int y = 0; y < height - 1; y = y + 25){ 		
+    		gc.strokeLine(0, y, width, y);
+    	}
 		// Dessiner les robots
         gc.setFill(Color.YELLOW);
 		for(EtatRobot etat : etat_simulation.liste_robots){
