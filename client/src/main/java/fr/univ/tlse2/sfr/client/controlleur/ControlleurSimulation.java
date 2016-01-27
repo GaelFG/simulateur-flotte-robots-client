@@ -1,5 +1,8 @@
 package fr.univ.tlse2.sfr.client.controlleur;
 
+import java.util.List;
+
+import fr.univ.tlse2.sfr.communication.EtatCarte;
 import fr.univ.tlse2.sfr.communication.EtatRobot;
 
 import fr.univ.tlse2.sfr.communication.EtatSimulation;
@@ -48,28 +51,33 @@ public class ControlleurSimulation {
 
 	// Dessine l'etatSimulation courant
 	public void dessiner(EtatSimulation etat_simulation) {
-		//def de variables
-		double width = etat_simulation.carte.largeur * 10;
-		double height = etat_simulation.carte.hauteur * 10;
         GraphicsContext gc = canvas_simulation.getGraphicsContext2D() ;
         
-        //Efface la frame prÃ©cÃ©dente
+        //Efface la frame précédente
         gc.clearRect(0, 0, canvas_simulation.getWidth(), canvas_simulation.getHeight());
-        
-		// Dessiner la grille
+        dessiner_carte(etat_simulation.carte);
+        dessiner_robots(etat_simulation.liste_robots);
+	}
+
+	private void dessiner_carte(EtatCarte etat_carte) {
+		GraphicsContext gc = canvas_simulation.getGraphicsContext2D();
         gc.setStroke(Color.BLACK);
+        double width = etat_carte.largeur * 10;
+		double height = etat_carte.hauteur * 10;
+        
         for(int x = 0; x < width - 1; x = x+ 25){
         	gc.strokeLine(x, 0, x, height);
         }
         for(int y = 0; y < height - 1; y = y + 25){ 		
     		gc.strokeLine(0, y, width, y);
     	}
-        
-		// Dessiner les robots
-        gc.setFill(Color.YELLOW);
-		for(EtatRobot etat : etat_simulation.liste_robots){
+	}
+	
+	private void dessiner_robots(List<EtatRobot> robots){
+		GraphicsContext gc = canvas_simulation.getGraphicsContext2D();
+		gc.setFill(Color.YELLOW);
+		for(EtatRobot etat : robots){
             gc.fillRect(etat.pos_robot.x*10, etat.pos_robot.y*10, 10, 10);
         }
-		
 	}
 }
