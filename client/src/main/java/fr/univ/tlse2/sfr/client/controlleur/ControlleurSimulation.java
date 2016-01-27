@@ -8,7 +8,7 @@ import java.util.List;
 import com.esotericsoftware.kryonet.Client;
 
 import fr.univ.tlse2.sfr.client.EcouteurReseau;
-import fr.univ.tlse2.sfr.client.model.EtatRobot;
+import fr.univ.tlse2.sfr.communication.EtatRobot;
 import fr.univ.tlse2.sfr.communication.DemarrerSimulation;
 import fr.univ.tlse2.sfr.communication.EnregistreurKryo;
 import fr.univ.tlse2.sfr.communication.EtatCarte;
@@ -19,6 +19,8 @@ import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.image.PixelWriter;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 
@@ -31,11 +33,6 @@ import javafx.scene.paint.Color;
 @SuppressWarnings("restriction")
 public class ControlleurSimulation {
 	
-	private Client connecteur_kryo;
-	private List<EtatSimulation> buffer_etats_simulation;
-	
-	private EtatCarte carte;
-	
 	@FXML
 	private Button play;
 	
@@ -46,7 +43,7 @@ public class ControlleurSimulation {
 	private AnchorPane simulation;
 	
 	
-	private ObservableList<EtatRobot> etat_robot_data = FXCollections.observableArrayList();
+	
 	
 	// les valeurs données pour la carte par le serveur
 	// représente le nombre de "gros carrés" soit 25px et un robot rempli 
@@ -60,69 +57,34 @@ public class ControlleurSimulation {
 		
 	}
 	
-	private void initialiser_connecteur_kryo(String url_serveur, int port_tcp) {
-		connecteur_kryo = new Client();
-		connecteur_kryo.start();
-		EnregistreurKryo.enregistrerLesClassesDeCommunication(connecteur_kryo.getKryo());
-		definir_ecouteur_kryo();
-		try {
-			connecteur_kryo.connect(5000, url_serveur, port_tcp);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-	}
-	
-	private void definir_ecouteur_kryo() {
-		connecteur_kryo.addListener(new EcouteurReseau(buffer_etats_simulation));
-	}
-	
 	/**
 	 * Initializes the controller class. This method is automatically called
 	 * after the fxml file has been loaded.
 	 */
 	@FXML
 	private void initialize() {
-		
-		// initialize network connection
-		buffer_etats_simulation = Collections.synchronizedList(new LinkedList<EtatSimulation>());
-		initialiser_connecteur_kryo("127.0.0.1", 8073);
-		connecteur_kryo.sendTCP(new DemarrerSimulation("mon test réseau !"));
-		while(buffer_etats_simulation.isEmpty()){
-			try {
-				Thread.sleep(1);
-			} catch (InterruptedException e) {}
-		}
-		// initialize map
-		this.carte = buffer_etats_simulation.get(0).carte;
-		
-		
-		
-		
+
 		// Handle Button event.
 		play.setOnAction((event) -> {
 			System.out.println("Button Action");
 		});			
 		
-		this.create_canvas();
+		//this.create_canvas();
 	}
 	
 
 	
-	private void create_canvas(){
-		/*double width = canvas_simulation.getWidth();
-		double height = canvas_simulation.getHeight();*/
+	/*private void create_canvas(){
 		double width = this.carte.largeur * 25;
 		double height = this.carte.hauteur * 25;
         GraphicsContext gc = canvas_simulation.getGraphicsContext2D() ;
         gc.clearRect(0, 0, width, height);
+
+        //gc.strokeLine(50, 50, 50, 50);
         
-        gc.setStroke(Color.GREEN);
-        gc.strokeLine(50, 50, 50, 50);
-        
-        gc.setStroke(Color.BLACK);
+        /*gc.setStroke(Color.BLACK);
         for (int x = 0; x <= width; x+=15) {
-            if (x % 75 == 0)  {
+            if (x % 25 == 0)  {
             	gc.setLineWidth(2.5);  
             }else {
             	 gc.setLineWidth(1);
@@ -132,13 +94,40 @@ public class ControlleurSimulation {
         
         gc.setStroke(Color.BLACK);
         for (int y = 0; y <= height; y+=15) {        	
-        	if (y % 75 == 0) {
+        	if (y % 25 == 0) {
             	gc.setLineWidth(2.5);  
             }else {
             	 gc.setLineWidth(1);
 			}
         	
         	gc.strokeLine(0, y, width - (width%15), y);
+        }*/
+        /*for(int x = 0; x < height-1; x++){
+        	for(int y = 0; y < width-1; y++){
+        		int abs = x * 5;
+        		int ord = y * 5;
+        		gc.setStroke(Color.BLACK);        		
+        		gc.strokeLine(x, y, 5, 5);
+        	}
         }
-	 }
+        gc.setFill(Color.YELLOW);
+        for(EtatRobot etat : buffer_etats_simulation.get(0).liste_robots){
+            int x = (int) (Math.floor(etat.pos_robot.x)+10);
+            int y = (int) (Math.floor(etat.pos_robot.y)+10);
+            gc.fillRect(x, y, 10, 10);
+        }
+        // test affichage robots
+        
+        for(int i = 0; i < buffer_etats_simulation.size(); i++){
+        	// get list EtatRobot
+        	List<EtatRobot> etatsRobots = buffer_etats_simulation.get(i).liste_robots;
+        	for(EtatRobot etat : etatsRobots){
+        		System.out.println("#####################");
+        		System.out.println("Robot " + etat.id_robot);
+        		System.out.println("x : " + etat.pos_robot.x);
+        		System.out.println("y : " + etat.pos_robot.y);
+        		System.out.println("#####################");
+        	}
+        }
+	 }*/
 }

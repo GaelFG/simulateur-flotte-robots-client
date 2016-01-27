@@ -11,7 +11,7 @@
    <children>
             <AnchorPane fx:id="simulation" prefHeight="660.0" prefWidth="1125.0">
                <children>
-                  <Canvas fx:id="canvas_simulation" height="660.0" layoutX="-96.0" layoutY="101.0" width="1125.0" />
+                  <Canvas fx:id="canvas_simulation" height="660.0" layoutX="50.0" layoutY="101.0" width="1125.0" />
                   <AnchorPane layoutX="358.0" layoutY="512.0" prefHeight="64.0" prefWidth="274.0" styleClass="dark-blue" stylesheets="@css/test.css">
                      <children>
                         <Button fx:id="play" layoutX="14.0" layoutY="13.0" mnemonicParsing="false" styleClass="shiny-orange" text="Play" />
