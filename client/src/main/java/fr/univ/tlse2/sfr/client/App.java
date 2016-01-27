@@ -39,13 +39,11 @@ public class App extends Application {
 		
 		this.primary_stage = primaryStage;
         this.primary_stage.setTitle("IHM Simulation Flotte Robots");
-        //this.init_root_layout();
-        Scene scene = new Scene(this.show_simulation(), Color.WHITE);
-        this.primary_stage.setScene(scene);
+        this.init_root_layout();
         this.primary_stage.show();
 	}
 	
-	/*private void init_root_layout(){
+	private void init_root_layout(){
 		try {
             // Load root layout from fxml file.
             FXMLLoader loader = new FXMLLoader();
@@ -59,9 +57,9 @@ public class App extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
-	}*/
+	}
 
-	 public GridPane show_simulation() {
+	 public void show_simulation() {
 		 
 		// initialize network connection
 		buffer_etats_simulation = Collections.synchronizedList(new LinkedList<EtatSimulation>());
@@ -73,21 +71,18 @@ public class App extends Application {
 			} catch (InterruptedException e) {}
 		}
 		// initialize map
-		this.carte = buffer_etats_simulation.get(0).carte;
-		return new GridPane(carte, buffer_etats_simulation);
-        /*try {
+		//this.carte = buffer_etats_simulation.get(0).carte;
+		//return new GridPane(carte, buffer_etats_simulation);
+        try {
             // Load person overview.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(App.class.getResource("vue/test.fxml"));
             AnchorPane simulation = (AnchorPane) loader.load();
             
-            
-            simulation.getChildren().add(grid);
-            
             root_layout.setCenter(simulation);
         } catch (IOException e) {
             e.printStackTrace();
-        }*/
+        }
     }
 	 
 	 private void initialiser_connecteur_kryo(String url_serveur, int port_tcp) {
