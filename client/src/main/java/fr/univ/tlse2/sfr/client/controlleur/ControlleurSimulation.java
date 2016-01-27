@@ -11,25 +11,16 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 
-
-
-
 /**
  * Controlleur de la frame simulation
  */
 public class ControlleurSimulation {
-	
 	@FXML
 	private Button play;
-	
 	@FXML
 	private Canvas canvas_simulation;
-	
 	@FXML
 	private AnchorPane simulation;
-	
-	
-	
 	
 	// les valeurs données pour la carte par le serveur
 	// représente le nombre de "gros carrés" soit 25px et un robot rempli 
