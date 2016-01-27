@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 
@@ -25,6 +26,8 @@ public class ControlleurSimulation {
 	@FXML
 	private AnchorPane simulation;
 	
+	private Image sprite_blatte_a;
+	
 	// les valeurs donnÃ©es pour la carte par le serveur
 	// reprÃ©sente le nombre de "gros carrÃ©s" soit 25px et un robot rempli 
 	// une "petite case" soit 5px par 5px et reprÃ©sente une unitÃ© de 0,2
@@ -33,7 +36,7 @@ public class ControlleurSimulation {
 	 * The constructor (is called before the initialize()-method).
 	 */
 	public ControlleurSimulation() {
-
+		sprite_blatte_a = new Image("/blatte.jpg", true);
 	}
 	
 	/**
@@ -51,9 +54,6 @@ public class ControlleurSimulation {
 
 	// Dessine l'etatSimulation courant
 	public void dessiner(EtatSimulation etat_simulation) {
-		//def de variables
-		double width = etat_simulation.carte.largeur * 20;
-		double height = etat_simulation.carte.hauteur * 20;
         GraphicsContext gc = canvas_simulation.getGraphicsContext2D() ;
         
         //Efface la frame pr�c�dente
@@ -65,8 +65,8 @@ public class ControlleurSimulation {
 	private void dessiner_carte(EtatCarte etat_carte) {
 		GraphicsContext gc = canvas_simulation.getGraphicsContext2D();
         gc.setStroke(Color.BLACK);
-        double width = etat_carte.largeur * 10;
-		double height = etat_carte.hauteur * 10;
+        double width = etat_carte.largeur * 20;
+		double height = etat_carte.hauteur * 20;
         
         for(int x = 0; x < width - 1; x = x+ 25){
         	gc.strokeLine(x, 0, x, height);
@@ -81,6 +81,7 @@ public class ControlleurSimulation {
 		gc.setFill(Color.YELLOW);
 		for(EtatRobot etat : robots){
             gc.fillRect(etat.pos_robot.x*10, etat.pos_robot.y*10, 10, 10);
+            //gc.drawImage(sprite_blatte_a, etat.pos_robot.x*10, etat.pos_robot.y*10);
         }
 	}
 }
