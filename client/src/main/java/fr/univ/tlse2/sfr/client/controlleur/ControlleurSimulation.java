@@ -22,8 +22,8 @@ import javafx.scene.transform.Rotate;
  */
 public class ControlleurSimulation {
 	
-	private final static int DEMIE_LARGEUR_ROBOT = 20;
-	private final static int DEMIE_HAUTEUR_ROBOT = 50;
+	private final static int FACTEUR_GROSSISSEMENT = 10;
+	private final static int MOITIEE_FACTEUR_GROSSISSEMENT = FACTEUR_GROSSISSEMENT/2;
 	
 	@FXML
 	private Button play;
@@ -71,14 +71,14 @@ public class ControlleurSimulation {
 
 	private void dessiner_carte(EtatCarte etat_carte) {
 		GraphicsContext gc = canvas_simulation.getGraphicsContext2D();
-        gc.setStroke(Color.BLACK);
-        double width = etat_carte.largeur * 20;
-		double height = etat_carte.hauteur * 20;
+        gc.setStroke(Color.BLUEVIOLET);
+        double width = etat_carte.largeur * FACTEUR_GROSSISSEMENT;
+		double height = etat_carte.hauteur * FACTEUR_GROSSISSEMENT;
         
-        for(int x = 0; x < width - 1; x = x+ 25){
+        for(int x = 0; x <= width; x = x + FACTEUR_GROSSISSEMENT){
         	gc.strokeLine(x, 0, x, height);
         }
-        for(int y = 0; y < height - 1; y = y + 25){ 		
+        for(int y = 0; y <= height; y = y + FACTEUR_GROSSISSEMENT){ 		
     		gc.strokeLine(0, y, width, y);
     	}
 
@@ -89,8 +89,7 @@ public class ControlleurSimulation {
 		//dessiner les obstacles        
         gc.setFill(Color.RED);
         for(EtatObstacle obstacle : obstacles){
-        	System.out.println(obstacle.taille);
-        	gc.fillRect(obstacle.position_obstacle.x*10, obstacle.position_obstacle.y*10, obstacle.taille*20, obstacle.taille*20);
+        	gc.fillRect((obstacle.position_obstacle.x - obstacle.taille)*FACTEUR_GROSSISSEMENT, (obstacle.position_obstacle.y - obstacle.taille)*FACTEUR_GROSSISSEMENT, obstacle.taille*2*FACTEUR_GROSSISSEMENT, obstacle.taille*2*FACTEUR_GROSSISSEMENT);
         }
 	}
 	
@@ -118,7 +117,7 @@ public class ControlleurSimulation {
      * @param tlpx the top left x co-ordinate where the image will be plotted (in canvas co-ordinates).
      * @param tlpy the top left y co-ordinate where the image will be plotted (in canvas co-ordinates).
      */
-    private void drawRotatedImage(GraphicsContext gc, Image image, double angle, double tlpx, double tlpy, double demi_largeur, double demi_hauteur) {
+    private void drawRotatedImage(GraphicsContext gc, Image image, double angle, double tlpx, double tlpy) {
         gc.save(); // saves the current state on stack, including the current transform
         rotate(gc, angle, tlpx + image.getWidth() / 2, tlpy + image.getHeight() / 2);
         gc.drawImage(image, tlpx, tlpy);
@@ -129,15 +128,7 @@ public class ControlleurSimulation {
 		GraphicsContext gc = canvas_simulation.getGraphicsContext2D();
 		gc.setFill(Color.YELLOW);
 		for(EtatRobot etat : robots){
-			drawRotatedImage(gc, sprite_blatte_a, etat.orientation_robot+90, etat.pos_robot.x*10, etat.pos_robot.y*10, DEMIE_LARGEUR_ROBOT, DEMIE_HAUTEUR_ROBOT);
-			/*
-			gc.save();
-			gc.translate(etat.pos_robot.x*10, etat.pos_robot.y*10);
-			gc.rotate(etat.orientation_robot);
-			//gc.drawImage(sprite_blatte_a, 0, 0, 10, 20);
-			gc.fillRect(-DEMIE_LARGEUR_ROBOT, -DEMIE_HAUTEUR_ROBOT, DEMIE_LARGEUR_ROBOT, DEMIE_HAUTEUR_ROBOT);
-			gc.restore();
-			*/
+			drawRotatedImage(gc, sprite_blatte_a, etat.orientation_robot+90, etat.pos_robot.x*FACTEUR_GROSSISSEMENT, etat.pos_robot.y*FACTEUR_GROSSISSEMENT);
         }
 	}
 }
