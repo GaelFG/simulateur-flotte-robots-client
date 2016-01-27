@@ -69,12 +69,12 @@ public class ControlleurSimulation {
 			System.out.println("Button Action");
 		});			
 		
-		//this.create_canvas();
+		this.create_canvas();
 	}
 	
 
 	
-	/*private void create_canvas(){
+	private void create_canvas(){
 		double width = this.carte.largeur * 25;
 		double height = this.carte.hauteur * 25;
         GraphicsContext gc = canvas_simulation.getGraphicsContext2D() ;
@@ -102,7 +102,7 @@ public class ControlleurSimulation {
         	
         	gc.strokeLine(0, y, width - (width%15), y);
         }*/
-        /*for(int x = 0; x < height-1; x++){
+        for(int x = 0; x < height-1; x++){
         	for(int y = 0; y < width-1; y++){
         		int abs = x * 5;
         		int ord = y * 5;
@@ -129,5 +129,5 @@ public class ControlleurSimulation {
         		System.out.println("#####################");
         	}
         }
-	 }*/
+	 }
 }

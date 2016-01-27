@@ -48,7 +48,7 @@ public class GridPane extends Pane {
             GraphicsContext gc = canvas.getGraphicsContext2D();
             gc.setLineWidth(1); // change the line width
 
-            gc.clearRect(0, 0, width, height);
+            gc.clearRect(0, 0, w, h);
             gc.setStroke(Color.GRAY);
             gc.setFill(Color.GRAY);
  
@@ -66,9 +66,7 @@ public class GridPane extends Pane {
     
     private void drawRobots(double heigth, double width){
     	GraphicsContext gc = canvas.getGraphicsContext2D();
-    	gc.setLineWidth(5);
-    	
-    	
+    	gc.setLineWidth(5);    	
     }
 
 }
