@@ -71,6 +71,11 @@ public class ControlleurSimulation {
 		
 		//this.create_canvas();
 	}
+
+	public void dessiner(EtatSimulation etat_simulation) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 
 	
