@@ -1,5 +1,6 @@
 package fr.univ.tlse2.sfr.client.controlleur;
 
+import fr.univ.tlse2.sfr.communication.EtatObstacle;
 import java.util.List;
 
 import fr.univ.tlse2.sfr.communication.EtatCarte;
@@ -61,10 +62,11 @@ public class ControlleurSimulation {
 	public void dessiner(EtatSimulation etat_simulation) {
         GraphicsContext gc = canvas_simulation.getGraphicsContext2D() ;
         
-        //Efface la frame précédente
+        //Efface la frame prï¿½cï¿½dente
         gc.clearRect(0, 0, canvas_simulation.getWidth(), canvas_simulation.getHeight());
         dessiner_carte(etat_simulation.carte);
         dessiner_robots(etat_simulation.liste_robots);
+        dessiner_obstacles(etat_simulation.liste_obstacles);
 	}
 
 	private void dessiner_carte(EtatCarte etat_carte) {
@@ -79,6 +81,17 @@ public class ControlleurSimulation {
         for(int y = 0; y < height - 1; y = y + 25){ 		
     		gc.strokeLine(0, y, width, y);
     	}
+
+	}
+	
+	private void dessiner_obstacles(List<EtatObstacle> obstacles){
+		GraphicsContext gc = canvas_simulation.getGraphicsContext2D();
+		//dessiner les obstacles        
+        gc.setFill(Color.RED);
+        for(EtatObstacle obstacle : obstacles){
+        	System.out.println(obstacle.taille);
+        	gc.fillRect(obstacle.position_obstacle.x*10, obstacle.position_obstacle.y*10, obstacle.taille*20, obstacle.taille*20);
+        }
 	}
 	
 	 /**
