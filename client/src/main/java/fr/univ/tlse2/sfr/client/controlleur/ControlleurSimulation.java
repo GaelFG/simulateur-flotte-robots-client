@@ -58,11 +58,11 @@ public class ControlleurSimulation {
 	// Dessine l'etatSimulation courant
 	public void dessiner(EtatSimulation etat_simulation) {
 		//def de variables
-		double width = etat_simulation.carte.largeur * 10;
-		double height = etat_simulation.carte.hauteur * 10;
+		double width = etat_simulation.carte.largeur * 20;
+		double height = etat_simulation.carte.hauteur * 20;
         GraphicsContext gc = canvas_simulation.getGraphicsContext2D() ;
         
-        //Efface la frame précédente
+        //Efface la frame prï¿½cï¿½dente
         gc.clearRect(0, 0, width, height);
         
 		// Dessiner la grille
