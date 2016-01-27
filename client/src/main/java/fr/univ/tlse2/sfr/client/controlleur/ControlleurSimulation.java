@@ -1,5 +1,6 @@
 package fr.univ.tlse2.sfr.client.controlleur;
 
+import fr.univ.tlse2.sfr.communication.EtatObstacle;
 import fr.univ.tlse2.sfr.communication.EtatRobot;
 
 import fr.univ.tlse2.sfr.communication.EtatSimulation;
@@ -64,6 +65,14 @@ public class ControlleurSimulation {
         for(int y = 0; y < height - 1; y = y + 25){ 		
     		gc.strokeLine(0, y, width, y);
     	}
+        
+        //dessiner les obstacles
+        //System.out.println(etat_simulation.liste_obstacles);
+        gc.setFill(Color.RED);
+        for(EtatObstacle obstacle : etat_simulation.liste_obstacles){
+        	System.out.println(obstacle.taille);
+        	gc.fillRect(obstacle.position_obstacle.x*10, obstacle.position_obstacle.y*10, obstacle.taille*20, obstacle.taille*20);
+        }
         
 		// Dessiner les robots
         gc.setFill(Color.YELLOW);
