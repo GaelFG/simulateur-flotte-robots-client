@@ -58,27 +58,26 @@ public class ControlleurSimulation {
 	// Dessine l'etatSimulation courant
 	public void dessiner(EtatSimulation etat_simulation) {
 		//def de variables
-		double width = etat_simulation.carte.largeur * 25;
-		double height = etat_simulation.carte.hauteur * 25;
+		double width = etat_simulation.carte.largeur * 10;
+		double height = etat_simulation.carte.hauteur * 10;
         GraphicsContext gc = canvas_simulation.getGraphicsContext2D() ;
         
         //Efface la frame précédente
         gc.clearRect(0, 0, width, height);
-		// Dessiner la carte
+        
+		// Dessiner la grille
         gc.setStroke(Color.BLACK);
         for(int x = 0; x < width - 1; x = x+ 25){
         	gc.strokeLine(x, 0, x, height);
         }
-        
         for(int y = 0; y < height - 1; y = y + 25){ 		
     		gc.strokeLine(0, y, width, y);
     	}
+        
 		// Dessiner les robots
         gc.setFill(Color.YELLOW);
 		for(EtatRobot etat : etat_simulation.liste_robots){
-            int x = (int) (Math.floor(etat.pos_robot.x)+10);
-            int y = (int) (Math.floor(etat.pos_robot.y)+10);
-            gc.fillRect(x, y, 10, 10);
+            gc.fillRect(etat.pos_robot.x*10, etat.pos_robot.y*10, 10, 10);
         }
 		
 	}
