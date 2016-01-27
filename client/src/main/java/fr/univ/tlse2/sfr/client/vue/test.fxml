@@ -7,19 +7,16 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1165.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.univ.tlse2.sfr.client.controlleur.ControlleurSimulation">
-   <children>
-            <AnchorPane fx:id="simulation" prefHeight="660.0" prefWidth="1125.0">
-               <children>
-                  <Canvas fx:id="canvas_simulation" height="660.0" layoutX="50.0" layoutY="101.0" width="1125.0" />
-                  <AnchorPane layoutX="358.0" layoutY="512.0" prefHeight="64.0" prefWidth="274.0" styleClass="dark-blue" stylesheets="@css/test.css">
-                     <children>
-                        <Button fx:id="play" layoutX="14.0" layoutY="13.0" mnemonicParsing="false" styleClass="shiny-orange" text="Play" />
-                        <Button fx:id="pause" layoutX="74.0" layoutY="13.0" mnemonicParsing="false" styleClass="shiny-orange" text="Pause" />
-                        <Button fx:id="back" layoutX="149.0" layoutY="13.0" mnemonicParsing="false" styleClass="shiny-orange" text="&gt;&gt;" />
-                        <Button fx:id="next" layoutX="204.0" layoutY="13.0" mnemonicParsing="false" styleClass="shiny-orange" text="&lt;&lt;" />
-                     </children>
-                  </AnchorPane>
-               </children></AnchorPane>
-         </children>
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.univ.tlse2.sfr.client.controlleur.ControlleurSimulation">
+	<children>
+		<Canvas fx:id="canvas_simulation" height="660.0" width="1125.0" />
+		<AnchorPane layoutX="-7.0" layoutY="666.0" prefHeight="67.0" prefWidth="329.0" styleClass="dark-blue" stylesheets="@css/test.css" AnchorPane.bottomAnchor="-10.0" AnchorPane.leftAnchor="-7.0">
+            <children>
+                <Button fx:id="play" layoutX="85.0" layoutY="13.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="75.0" styleClass="shiny-orange" text="Play" />
+                <Button fx:id="pause" layoutX="175.0" layoutY="13.0" mnemonicParsing="false" styleClass="shiny-orange" text="Pause" />
+                <Button fx:id="back" layoutX="260.0" layoutY="13.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="55.0" styleClass="shiny-orange" text="&gt;&gt;" />
+                <Button fx:id="next" layoutX="20.0" layoutY="13.0" mnemonicParsing="false" styleClass="shiny-orange" text="&lt;&lt;" />
+            </children>
+        </AnchorPane>
+    </children>
 </AnchorPane>
