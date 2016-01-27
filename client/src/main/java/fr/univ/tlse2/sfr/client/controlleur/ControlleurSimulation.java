@@ -22,9 +22,9 @@ public class ControlleurSimulation {
 	@FXML
 	private AnchorPane simulation;
 	
-	// les valeurs données pour la carte par le serveur
-	// représente le nombre de "gros carrés" soit 25px et un robot rempli 
-	// une "petite case" soit 5px par 5px et représente une unité de 0,2
+	// les valeurs donnÃ©es pour la carte par le serveur
+	// reprÃ©sente le nombre de "gros carrÃ©s" soit 25px et un robot rempli 
+	// une "petite case" soit 5px par 5px et reprÃ©sente une unitÃ© de 0,2
 	// exemple une carte 2x2 fera 50px par 50px
 	/**
 	 * The constructor (is called before the initialize()-method).
@@ -53,8 +53,8 @@ public class ControlleurSimulation {
 		double height = etat_simulation.carte.hauteur * 10;
         GraphicsContext gc = canvas_simulation.getGraphicsContext2D() ;
         
-        //Efface la frame pr�c�dente
-        gc.clearRect(0, 0, width, height);
+        //Efface la frame précédente
+        gc.clearRect(0, 0, canvas_simulation.getWidth(), canvas_simulation.getHeight());
         
 		// Dessiner la grille
         gc.setStroke(Color.BLACK);
