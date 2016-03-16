@@ -25,8 +25,18 @@ public class ControlleurSimulation {
 	private final static int FACTEUR_GROSSISSEMENT = 10;
 	private final static int MOITIEE_FACTEUR_GROSSISSEMENT = FACTEUR_GROSSISSEMENT/2;
 	
+	// Bouton play
 	@FXML
 	private Button play;
+	// Bouton pause
+	@FXML
+	private Button pause;
+	// Bouton >>
+	@FXML
+	private Button acc;
+	// Bouton <<
+	@FXML
+	private Button slow;
 	@FXML
 	private Canvas canvas_simulation;
 	@FXML
@@ -34,10 +44,6 @@ public class ControlleurSimulation {
 	
 	private Image sprite_blatte_a;
 	
-	// les valeurs donnÃ©es pour la carte par le serveur
-	// reprÃ©sente le nombre de "gros carrÃ©s" soit 25px et un robot rempli 
-	// une "petite case" soit 5px par 5px et reprÃ©sente une unitÃ© de 0,2
-	// exemple une carte 2x2 fera 50px par 50px
 	/**
 	 * The constructor (is called before the initialize()-method).
 	 */
@@ -51,11 +57,12 @@ public class ControlleurSimulation {
 	 */
 	@FXML
 	private void initialize() {
-
-		// Handle Button event.
-		play.setOnAction((event) -> {
+		
+		// ici faire les listeners pour les boutons
+		// EX : le code pour le bouton play
+		/*play.setOnAction((event) -> {
 			System.out.println("Button Action");
-		});
+		});*/
 	}
 
 	// Dessine l'etatSimulation courant
