@@ -81,7 +81,7 @@ public class App extends Application {
             AnchorPane simulation = (AnchorPane) fxmlLoader.load(location.openStream());
             root_layout.setCenter(simulation);
 
-    		//ajouter l'ecouteur reseau adapté
+    		//ajouter l'ecouteur reseau adaptï¿½
             ControlleurSimulation controleur_affichage_simulation = fxmlLoader.getController();
             connecteur_kryo.addListener(new EcouteurReseauAffichageSimulation(controleur_affichage_simulation));
             
