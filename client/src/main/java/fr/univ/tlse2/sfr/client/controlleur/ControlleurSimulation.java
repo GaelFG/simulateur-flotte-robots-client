@@ -1,6 +1,8 @@
 package fr.univ.tlse2.sfr.client.controlleur;
 
 import fr.univ.tlse2.sfr.communication.EtatObstacle;
+
+import java.io.Console;
 import java.util.List;
 
 import fr.univ.tlse2.sfr.communication.EtatCarte;
@@ -22,7 +24,7 @@ import javafx.scene.transform.Rotate;
  */
 public class ControlleurSimulation {
 	
-	private final static int FACTEUR_GROSSISSEMENT = 10;
+	private final static int FACTEUR_GROSSISSEMENT = 1;
 	private final static int MOITIEE_FACTEUR_GROSSISSEMENT = FACTEUR_GROSSISSEMENT/2;
 	
 	@FXML
