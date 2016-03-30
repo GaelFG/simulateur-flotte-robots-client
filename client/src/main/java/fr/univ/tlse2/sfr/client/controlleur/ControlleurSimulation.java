@@ -25,7 +25,7 @@ import javafx.scene.transform.Rotate;
  */
 public class ControlleurSimulation {
 	
-	private final static int FACTEUR_GROSSISSEMENT = 10;
+	private final static int FACTEUR_GROSSISSEMENT = 1;
 	private final static int MOITIEE_FACTEUR_GROSSISSEMENT = FACTEUR_GROSSISSEMENT/2;
 	
 	// Bouton play
