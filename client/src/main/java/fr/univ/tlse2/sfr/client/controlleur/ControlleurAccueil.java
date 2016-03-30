@@ -39,7 +39,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.RadioButton;
-
+import fr.univ.tlse2.sfr.communication.ArreterSimulation;
 import fr.univ.tlse2.sfr.communication.DemarrerSimulation;
 import fr.univ.tlse2.sfr.communication.EnregistreurKryo;
 import fr.univ.tlse2.sfr.communication.EtatCarte;
@@ -193,8 +193,7 @@ public class ControlleurAccueil {
 				@Override
 				public void handle(WindowEvent event) {
 					System.out.println("il faut stop le calcul pour la simulation en cours");
-					connecteur_kryo.sendTCP(new MessageTexte("STOP"));
-					
+					connecteur_kryo.sendTCP(new ArreterSimulation());
 				}
 			});
 			stage.setHeight(1000);
