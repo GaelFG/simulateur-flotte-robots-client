@@ -16,15 +16,18 @@ import fr.univ.tlse2.sfr.communication.EnregistreurKryo;
 import fr.univ.tlse2.sfr.communication.EtatCarte;
 import fr.univ.tlse2.sfr.communication.EtatRobot;
 import fr.univ.tlse2.sfr.communication.EtatSimulation;
+import fr.univ.tlse2.sfr.communication.MessageTexte;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
 
@@ -59,6 +62,15 @@ public class App extends Application {
             // Show the scene containing the root layout.
             Scene scene = new Scene(root_layout);
             primary_stage.setScene(scene);
+            
+            primary_stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+				@Override
+				public void handle(WindowEvent event) {
+					System.out.println("il faut stop le calcul pour la simulation en cours");
+					connecteur_kryo.sendTCP(new MessageTexte("STOP"));
+				}
+			});
+			
             primary_stage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -70,19 +82,20 @@ public class App extends Application {
 		// initialize network connection
 		buffer_etats_simulation = Collections.synchronizedList(new LinkedList<EtatSimulation>());
 		initialiser_connecteur_kryo("127.0.0.1", 8073);
-		connecteur_kryo.sendTCP(new DemarrerSimulation("mon test réseau !"));
+		//connecteur_kryo.sendTCP(new DemarrerSimulation("mon test réseau !"));
 
         try {
-            URL location = getClass().getResource("vue/test.fxml");
+            URL location = getClass().getResource("vue/Simulation.fxml");
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(location);
             fxmlLoader.setBuilderFactory(new JavaFXBuilderFactory());
-
+            
             AnchorPane simulation = (AnchorPane) fxmlLoader.load(location.openStream());
             root_layout.setCenter(simulation);
 
-    		//ajouter l'ecouteur reseau adapt�
+    		//ajouter l'ecouteur reseau adapté
             ControlleurSimulation controleur_affichage_simulation = fxmlLoader.getController();
+            controleur_affichage_simulation.set_connecteur_kryo(connecteur_kryo);
             connecteur_kryo.addListener(new EcouteurReseauAffichageSimulation(controleur_affichage_simulation));
             
             

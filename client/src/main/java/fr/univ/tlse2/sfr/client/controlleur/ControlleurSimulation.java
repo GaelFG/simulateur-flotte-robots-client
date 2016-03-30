@@ -1,10 +1,11 @@
 package fr.univ.tlse2.sfr.client.controlleur;
 
 import fr.univ.tlse2.sfr.communication.EtatObstacle;
-
-import java.io.Console;
 import java.util.List;
 
+import com.esotericsoftware.kryonet.Client;
+
+import fr.univ.tlse2.sfr.communication.DemarrerSimulation;
 import fr.univ.tlse2.sfr.communication.EtatCarte;
 import fr.univ.tlse2.sfr.communication.EtatRobot;
 
@@ -24,7 +25,7 @@ import javafx.scene.transform.Rotate;
  */
 public class ControlleurSimulation {
 	
-	private final static int FACTEUR_GROSSISSEMENT = 1;
+	private final static int FACTEUR_GROSSISSEMENT = 10;
 	private final static int MOITIEE_FACTEUR_GROSSISSEMENT = FACTEUR_GROSSISSEMENT/2;
 	
 	// Bouton play
@@ -45,6 +46,7 @@ public class ControlleurSimulation {
 	private AnchorPane simulation;
 	
 	private Image sprite_blatte_a;
+	private Client connecteur_kryo;
 	
 	/**
 	 * The constructor (is called before the initialize()-method).
@@ -59,19 +61,27 @@ public class ControlleurSimulation {
 	 */
 	@FXML
 	private void initialize() {
-		
-		// ici faire les listeners pour les boutons
-		// EX : le code pour le bouton play
-		/*play.setOnAction((event) -> {
+
+		// Handle Button event.
+		play.setOnAction((event) -> {
 			System.out.println("Button Action");
-		});*/
+			DemarrerSimulation lancement_simu = new DemarrerSimulation("simulation");
+			connecteur_kryo.sendTCP(lancement_simu);
+		});
+		
+		
+	}
+	
+	public void set_connecteur_kryo(Client connecteur_kryo)
+	{
+		this.connecteur_kryo = connecteur_kryo;
 	}
 
 	// Dessine l'etatSimulation courant
 	public void dessiner(EtatSimulation etat_simulation) {
         GraphicsContext gc = canvas_simulation.getGraphicsContext2D() ;
         
-        //Efface la frame pr�c�dente
+        //Efface la frame précédente
         gc.clearRect(0, 0, canvas_simulation.getWidth(), canvas_simulation.getHeight());
         dessiner_carte(etat_simulation.carte);
         dessiner_robots(etat_simulation.liste_robots);
