@@ -7,11 +7,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.esotericsoftware.kryonet.Client;
-import com.sun.corba.se.impl.ior.GenericTaggedComponent;
 
 import fr.univ.tlse2.sfr.client.controlleur.ControlleurSimulation;
-import fr.univ.tlse2.sfr.client.vue.GridPane;
-import fr.univ.tlse2.sfr.communication.DemarrerSimulation;
 import fr.univ.tlse2.sfr.communication.EnregistreurKryo;
 import fr.univ.tlse2.sfr.communication.EtatCarte;
 import fr.univ.tlse2.sfr.communication.EtatRobot;
@@ -21,11 +18,9 @@ import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.fxml.FXMLLoader;
