@@ -1,32 +1,11 @@
 package fr.univ.tlse2.sfr.client;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-
-import com.esotericsoftware.kryonet.Client;
-import com.sun.corba.se.impl.ior.GenericTaggedComponent;
-
-import fr.univ.tlse2.sfr.client.EcouteurReseau;
-import fr.univ.tlse2.sfr.client.EcouteurReseauAffichageSimulation;
-import fr.univ.tlse2.sfr.client.controlleur.ControlleurSimulation;
-import fr.univ.tlse2.sfr.client.vue.GridPane;
-import fr.univ.tlse2.sfr.communication.DemarrerSimulation;
-import fr.univ.tlse2.sfr.communication.EnregistreurKryo;
-import fr.univ.tlse2.sfr.communication.EtatCarte;
-import fr.univ.tlse2.sfr.communication.EtatRobot;
-import fr.univ.tlse2.sfr.communication.EtatSimulation;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
