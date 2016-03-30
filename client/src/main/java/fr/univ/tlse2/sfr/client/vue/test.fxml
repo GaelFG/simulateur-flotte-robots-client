@@ -15,7 +15,7 @@
             <Button fx:id="play" layoutX="87.0" layoutY="7.0" mnemonicParsing="false" text="Play" />
             <Button fx:id="acc" layoutX="260.0" layoutY="7.0" mnemonicParsing="false" text="&gt;&gt;" />
             <Button fx:id="pause" layoutX="168.0" layoutY="7.0" mnemonicParsing="false" text="Pause" />
-            <Button fx:id="slow"layoutX="14.0" layoutY="7.0" mnemonicParsing="false" text="&lt;&lt;" />
+            <Button fx:id="slow" layoutX="14.0" layoutY="7.0" mnemonicParsing="false" text="&lt;&lt;" />
          </children>
       </Pane>
     </children>
