@@ -1,40 +1,32 @@
-.dark-blue {
+.hub{
     -fx-background-color: 
-        linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),
-        linear-gradient(#20262b, #191d22),
+        linear-gradient(#20262c, #16191d),
         radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));
-    -fx-background-radius: 10,10,10,10;
-    /*-fx-background-insets: 0,1,2,0;
-	-fx-border-bottom-left-radius : 100px;
-	/*-fx-border-bottom-right-radius : 100px;
-	-display:block;
-	-background:#fc0;
-	-border-left:1px solid #fff;
-	-border-right:1px solid #fff;
-	-margin:0 5px;
-	-fx-background-left-radius:5,4;
-	-fx-background-right-radius:1px solid #fff;
-	-fx-border: 2px solid;
-    -fx-padding: 10px;
--fx-background-insets: 0,1,2,0;
-    -fx-border-bottom-left-radius: 2em;*/
-	
+    -fx-border-color: #000000;
+    -fx-border-width: 2;
 }
-
-.shiny-orange {
+.button {
     -fx-background-color:
-        linear-gradient(#ffe657 0%, #f8c202 50%, #eea10b 100%),
-        linear-gradient(from 0% 0% to 15% 50%, rgba(255,255,255,0.9), rgba(255,255,255,0));
-    -fx-background-radius: 5,4,3,5;
-    -fx-background-insets: 0,1,2,0;
-    -fx-text-fill: #654b00;
-    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
-    -fx-font-family: "Arial";
-    -fx-padding: 10 20 10 20;
-	-text-decoration: underline;
-    -font-weight: bolder;
+        linear-gradient(#617184, #4c5867),
+        radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));
+    -fx-padding: 5 22 5 22;
+    -fx-border-color: #16191d;
+    -fx-border-width: 1;
+    -fx-background-radius: 0;
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 11pt;
+    -fx-text-fill: #d8d8d8;
+    -fx-background-insets: 0 0 0 0, 0, 1, 2;
 }
 
-.shiny-orange Text {
-    -fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.9) , 1, 0.0 , 0 , 1 );
+.button:hover {
+    -fx-background-color: 
+        linear-gradient(#414b58, #2b323b),
+        radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));
+}
+
+.button:pressed {
+    -fx-background-color: 
+        linear-gradient(#20262c, #16191d),
+        radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));
 }
