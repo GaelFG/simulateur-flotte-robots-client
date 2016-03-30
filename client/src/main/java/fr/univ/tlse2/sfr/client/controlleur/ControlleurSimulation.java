@@ -26,7 +26,6 @@ import javafx.scene.transform.Rotate;
 public class ControlleurSimulation {
 	
 	private final static int FACTEUR_GROSSISSEMENT = 1;
-	private final static int MOITIEE_FACTEUR_GROSSISSEMENT = FACTEUR_GROSSISSEMENT/2;
 	
 	// Bouton play
 	@FXML
@@ -81,8 +80,9 @@ public class ControlleurSimulation {
 	public void dessiner(EtatSimulation etat_simulation) {
         GraphicsContext gc = canvas_simulation.getGraphicsContext2D() ;
         
-        //Efface la frame prÃ©cÃ©dente
+        //Efface la frame précédente
         gc.clearRect(0, 0, canvas_simulation.getWidth(), canvas_simulation.getHeight());
+        
         dessiner_carte(etat_simulation.carte);
         dessiner_robots(etat_simulation.liste_robots);
         dessiner_obstacles(etat_simulation.liste_obstacles);
@@ -90,14 +90,14 @@ public class ControlleurSimulation {
 
 	private void dessiner_carte(EtatCarte etat_carte) {
 		GraphicsContext gc = canvas_simulation.getGraphicsContext2D();
-        gc.setStroke(Color.BLUEVIOLET);
-        double width = etat_carte.largeur * FACTEUR_GROSSISSEMENT;
-		double height = etat_carte.hauteur * FACTEUR_GROSSISSEMENT;
+        gc.setStroke(Color.DARKGREY);
+        double width = etat_carte.largeur;
+		double height = etat_carte.hauteur;
         
-        for(int x = 0; x <= width; x = x + FACTEUR_GROSSISSEMENT){
+        for(int x = 0; x <= width; x = x + 16){
         	gc.strokeLine(x, 0, x, height);
         }
-        for(int y = 0; y <= height; y = y + FACTEUR_GROSSISSEMENT){ 		
+        for(int y = 0; y <= height; y = y+ 16){ 		
     		gc.strokeLine(0, y, width, y);
     	}
 
@@ -106,9 +106,9 @@ public class ControlleurSimulation {
 	private void dessiner_obstacles(List<EtatObstacle> obstacles){
 		GraphicsContext gc = canvas_simulation.getGraphicsContext2D();
 		//dessiner les obstacles        
-        gc.setFill(Color.RED);
+        gc.setFill(Color.DIMGREY);
         for(EtatObstacle obstacle : obstacles){
-        	gc.fillRect((obstacle.position_obstacle.x - obstacle.taille)*FACTEUR_GROSSISSEMENT, (obstacle.position_obstacle.y - obstacle.taille)*FACTEUR_GROSSISSEMENT, obstacle.taille*2*FACTEUR_GROSSISSEMENT, obstacle.taille*2*FACTEUR_GROSSISSEMENT);
+        	gc.fillRect((obstacle.position_obstacle.x - obstacle.taille), (obstacle.position_obstacle.y - obstacle.taille), obstacle.taille*2, obstacle.taille*2);
         }
 	}
 	
@@ -147,7 +147,7 @@ public class ControlleurSimulation {
 		GraphicsContext gc = canvas_simulation.getGraphicsContext2D();
 		gc.setFill(Color.YELLOW);
 		for(EtatRobot etat : robots){
-			drawRotatedImage(gc, sprite_blatte_a, etat.orientation_robot+90, etat.pos_robot.x*FACTEUR_GROSSISSEMENT, etat.pos_robot.y*FACTEUR_GROSSISSEMENT);
+			drawRotatedImage(gc, sprite_blatte_a, etat.orientation_robot+90, etat.pos_robot.x, etat.pos_robot.y);
         }
 	}
 }
