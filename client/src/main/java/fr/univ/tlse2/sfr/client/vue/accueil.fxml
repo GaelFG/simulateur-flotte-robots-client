@@ -1,12 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.layout.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 
-
-<AnchorPane fx:id="accueil" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="489.0" prefWidth="638.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="accueil" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="360.0" prefWidth="400.0" stylesheets="@css/test.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.univ.tlse2.sfr.client.controlleur.ControlleurAccueil">
    <children>
-      <Button fx:id ="lancer_simulation" defaultButton="true" layoutX="242.0" layoutY="402.0" mnemonicParsing="false" text="lancer simulation" AnchorPane.bottomAnchor="10.0" AnchorPane.topAnchor="10.0" />
+      <Label layoutX="19.0" layoutY="14.0" text="Choix du mode">
+         <font>
+            <Font size="48.0" />
+         </font>
+      </Label>
+      <RadioButton fx:id="manuel" layoutX="34.0" layoutY="79.0" mnemonicParsing="false" text="Lancer manuellement">
+         <toggleGroup>
+            <ToggleGroup fx:id="radio1" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton fx:id="auto" layoutX="34.0" layoutY="112.0" mnemonicParsing="false" text="Lancer automatiquement" toggleGroup="$radio1" />
+      <RadioButton fx:id="conf" layoutX="33.0" layoutY="214.0" mnemonicParsing="false" text="Charger fichier de configuration" toggleGroup="$radio1" />
+      <Label fx:id="nom_fichier" layoutX="13.0" layoutY="278.0" prefHeight="15.0" prefWidth="380.0" />
+      <Button fx:id="valider" layoutX="144.0" layoutY="318.0" mnemonicParsing="false" text="Valider" />
+      <Label layoutX="59.0" layoutY="147.0" text="Nombre de robot(s)" />
+      <Button fx:id="parcourir" disable="true" layoutX="78.0" layoutY="240.0" mnemonicParsing="false" text="Parcourir" />
+      <TextField fx:id="input_nb_robot" layoutX="216.0" layoutY="142.0" />
+      <Label layoutX="59.0" layoutY="183.0" text="Nombre d'obstacle(s)" />
+      <TextField fx:id="input_nb_obstacle" layoutX="217.0" layoutY="178.0" />
+      <Line endX="100.0" layoutX="104.0" layoutY="308.0" startX="-100.0" />
+      <Line endX="100.0" layoutX="304.0" layoutY="308.0" startX="-100.0" />
    </children>
 </AnchorPane>

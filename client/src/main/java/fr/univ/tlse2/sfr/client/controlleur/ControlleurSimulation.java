@@ -60,12 +60,12 @@ public class ControlleurSimulation {
 	 */
 	@FXML
 	private void initialize() {
+		this.set_connecteur_kryo(ControlleurAccueil.connecteur_kryo);
 
 		// Handle Button event.
 		play.setOnAction((event) -> {
-			System.out.println("Button Action");
 			DemarrerSimulation lancement_simu = new DemarrerSimulation("simulation");
-			connecteur_kryo.sendTCP(lancement_simu);
+			this.connecteur_kryo.sendTCP(lancement_simu);
 		});
 		
 		
