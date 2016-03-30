@@ -51,10 +51,7 @@ public class App extends Application {
 	}
 	
 	private void init_root_layout(){
-        // Load root layout from fxml file.
-        FXMLLoader loader = new FXMLLoader();
-        //loader.setLocation(App.class.getResource("vue/RootLayout.fxml"));
-        //root_layout = (BorderPane) loader.load();
+		// Initialize root layout
         root_layout = new BorderPane();
 
         // Show the scene containing the root layout.

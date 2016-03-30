@@ -6,6 +6,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
 import java.io.File;
@@ -26,6 +27,7 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
@@ -43,6 +45,7 @@ import fr.univ.tlse2.sfr.communication.EnregistreurKryo;
 import fr.univ.tlse2.sfr.communication.EtatCarte;
 import fr.univ.tlse2.sfr.communication.EtatRobot;
 import fr.univ.tlse2.sfr.communication.EtatSimulation;
+import fr.univ.tlse2.sfr.communication.MessageTexte;
 
 public class ControlleurAccueil {
 	
@@ -71,7 +74,7 @@ public class ControlleurAccueil {
 	private Button parcourir;
 	
 	private ObservableList<EtatRobot> etat_robot_data = FXCollections.observableArrayList();
-	private Client connecteur_kryo;
+	public static Client connecteur_kryo;
 	private List<EtatSimulation> buffer_etats_simulation;
 	private EtatCarte carte;
 	
@@ -135,6 +138,7 @@ public class ControlleurAccueil {
 			}else{
 				if(!error){
 					this.show_progress_bar();
+					//this.init_root_layout();
 				}
 			}
 		});
@@ -185,6 +189,15 @@ public class ControlleurAccueil {
 			root_layout = (BorderPane) loader.load();
 			Scene scene = new Scene(root_layout);
 			Stage stage = (Stage) manuel.getScene().getWindow();
+			stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+				
+				@Override
+				public void handle(WindowEvent event) {
+					System.out.println("il faut stop le calcul pour la simulation en cours");
+					connecteur_kryo.sendTCP(new MessageTexte("STOP"));
+					
+				}
+			});
 			stage.setHeight(1000);
 	        stage.setWidth(1200);
 	        stage.setResizable(true);
@@ -200,10 +213,9 @@ public class ControlleurAccueil {
 		// initialize network connection
 		buffer_etats_simulation = Collections.synchronizedList(new LinkedList<EtatSimulation>());
 		initialiser_connecteur_kryo("127.0.0.1", 8073);
-		//connecteur_kryo.sendTCP(new DemarrerSimulation("mon test réseau !"));
 		try {
 			FXMLLoader fxmlLoader = new FXMLLoader();
-	        fxmlLoader.setLocation(App.class.getResource("vue/test.fxml"));
+	        fxmlLoader.setLocation(App.class.getResource("vue/Simulation.fxml"));
 	        fxmlLoader.setBuilderFactory(new JavaFXBuilderFactory());
             AnchorPane simulation = (AnchorPane) fxmlLoader.load();
             root_layout.setCenter(simulation);
@@ -265,10 +277,11 @@ public class ControlleurAccueil {
 	    layout.setPadding(new Insets(10));
 	    layout.setAlignment(Pos.CENTER);
 	    layout.getStylesheets().add(getClass().getResource("../vue/css/progress_bar.css").toExternalForm());
-	    Stage stage = (Stage) manuel.getScene().getWindow();
-	    stage.setHeight(100);
-        stage.setWidth(200);
-	    stage.setScene(new Scene(layout));
-	    stage.show();
+	    //Stage stage = (Stage) manuel.getScene().getWindow();
+	    Stage stage_progress_bar = new Stage();
+	    stage_progress_bar.setHeight(100);
+	    stage_progress_bar.setWidth(200);
+        stage_progress_bar.setScene(new Scene(layout));
+        stage_progress_bar.show();
 	}
 }
