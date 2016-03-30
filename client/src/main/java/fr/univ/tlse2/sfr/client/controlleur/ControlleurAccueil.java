@@ -116,7 +116,7 @@ public class ControlleurAccueil {
 						this.show_error_dialog("Saisir un nombre positif de robot !");
 						error = true;
 					}else{
-						this.show_progress_bar();
+						this.init_root_layout();
 					}
 				}catch(Exception e){
 					this.show_error_dialog("Saisir un nombre valide de robot et d'obstacle!");
@@ -128,7 +128,7 @@ public class ControlleurAccueil {
 					this.show_error_dialog("Le fichier de configuration n'est pas choisi !");
 					error = true;
 				}else{
-					this.show_progress_bar();
+					this.init_root_layout();
 				}
 			}
 			if(!manuel.isSelected() && !auto.isSelected() && !conf.isSelected()){
@@ -137,8 +137,7 @@ public class ControlleurAccueil {
 				error = true;
 			}else{
 				if(!error){
-					this.show_progress_bar();
-					//this.init_root_layout();
+					this.init_root_layout();
 				}
 			}
 		});
