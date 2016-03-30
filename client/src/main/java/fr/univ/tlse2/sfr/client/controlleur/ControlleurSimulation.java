@@ -3,6 +3,9 @@ package fr.univ.tlse2.sfr.client.controlleur;
 import fr.univ.tlse2.sfr.communication.EtatObstacle;
 import java.util.List;
 
+import com.esotericsoftware.kryonet.Client;
+
+import fr.univ.tlse2.sfr.communication.DemarrerSimulation;
 import fr.univ.tlse2.sfr.communication.EtatCarte;
 import fr.univ.tlse2.sfr.communication.EtatRobot;
 
@@ -25,19 +28,26 @@ public class ControlleurSimulation {
 	private final static int FACTEUR_GROSSISSEMENT = 10;
 	private final static int MOITIEE_FACTEUR_GROSSISSEMENT = FACTEUR_GROSSISSEMENT/2;
 	
+	// Bouton play
 	@FXML
 	private Button play;
+	// Bouton pause
+	@FXML
+	private Button pause;
+	// Bouton >>
+	@FXML
+	private Button acc;
+	// Bouton <<
+	@FXML
+	private Button slow;
 	@FXML
 	private Canvas canvas_simulation;
 	@FXML
 	private AnchorPane simulation;
 	
 	private Image sprite_blatte_a;
+	private Client connecteur_kryo;
 	
-	// les valeurs donnÃ©es pour la carte par le serveur
-	// reprÃ©sente le nombre de "gros carrÃ©s" soit 25px et un robot rempli 
-	// une "petite case" soit 5px par 5px et reprÃ©sente une unitÃ© de 0,2
-	// exemple une carte 2x2 fera 50px par 50px
 	/**
 	 * The constructor (is called before the initialize()-method).
 	 */
@@ -55,14 +65,23 @@ public class ControlleurSimulation {
 		// Handle Button event.
 		play.setOnAction((event) -> {
 			System.out.println("Button Action");
+			DemarrerSimulation lancement_simu = new DemarrerSimulation("simulation");
+			connecteur_kryo.sendTCP(lancement_simu);
 		});
+		
+		
+	}
+	
+	public void set_connecteur_kryo(Client connecteur_kryo)
+	{
+		this.connecteur_kryo = connecteur_kryo;
 	}
 
 	// Dessine l'etatSimulation courant
 	public void dessiner(EtatSimulation etat_simulation) {
         GraphicsContext gc = canvas_simulation.getGraphicsContext2D() ;
         
-        //Efface la frame pr�c�dente
+        //Efface la frame précédente
         gc.clearRect(0, 0, canvas_simulation.getWidth(), canvas_simulation.getHeight());
         dessiner_carte(etat_simulation.carte);
         dessiner_robots(etat_simulation.liste_robots);
