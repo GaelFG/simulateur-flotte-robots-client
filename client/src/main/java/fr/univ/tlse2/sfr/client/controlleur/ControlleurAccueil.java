@@ -110,43 +110,34 @@ public class ControlleurAccueil {
 	
 	private void definir_action_bouton_lancer_simulation() {
 		valider.setOnAction((event) -> {
-			boolean error = false;
-			if(auto.isSelected()){
+			
+			if (manuel.isSelected()) {
+				this.init_root_layout();
+			}
+			
+			if (auto.isSelected()) {
 				try{
 					int value_robot = Integer.parseInt(input_nb_robot.getText());
 					int value_obstacle = Integer.parseInt(input_nb_obstacle.getText());
 					if(value_robot <= 0 && value_obstacle <= 0){
-						this.afficher_fenetre_modale_d_erreur("Saisir un nombre positif de robot et d'obstacle!");
-						error = true;
+						this.afficher_fenetre_modale_d_erreur("Saisir un nombre positif de robots et d'obstacles !");
 					}else if(value_obstacle <= 0){
-						this.afficher_fenetre_modale_d_erreur("Saisir un nombre positif d'obstacle !");
-						error = true;
+						this.afficher_fenetre_modale_d_erreur("Saisir un nombre positif d'obstacles !");
 					}else if(value_robot <= 0){
-						this.afficher_fenetre_modale_d_erreur("Saisir un nombre positif de robot !");
-						error = true;
+						this.afficher_fenetre_modale_d_erreur("Saisir un nombre positif de robots !");
 					}else{
-						this.init_root_layout();
+						afficher_fenetre_modale_d_erreur("La fonctionnalité 'Paramétrer le nombre de robots et d'obstacles sur la simulation' n'est pas implémentée.");
 					}
 				}catch(Exception e){
-					this.afficher_fenetre_modale_d_erreur("Saisir un nombre valide de robot et d'obstacle!");
-					error = true;
+					this.afficher_fenetre_modale_d_erreur("Saisir un nombre valide de robots et d'obstacles !");
 				}
 			}
+			
 			if(conf.isSelected()){
 				if(this.selectedFile == null){
-					this.afficher_fenetre_modale_d_erreur("Le fichier de configuration n'est pas choisi !");
-					error = true;
+					this.afficher_fenetre_modale_d_erreur("Aucun fichier configuration valide sélectionné !");
 				}else{
-					this.init_root_layout();
-				}
-			}
-			if(!manuel.isSelected() && !auto.isSelected() && !conf.isSelected()){
-				// aucun bouton radio selectionne => affichage message erreur
-				this.afficher_fenetre_modale_d_erreur("Choisir une option !");
-				error = true;
-			}else{
-				if(!error){
-					this.init_root_layout();
+					afficher_fenetre_modale_d_erreur("La fonctionnalité 'Charger des paramètres de simulation depuis un fichier externe' n'est pas implémentée.");
 				}
 			}
 		});
@@ -239,44 +230,5 @@ public class ControlleurAccueil {
 	private void definir_ecouteur_kryo() {
 		connecteur_kryo.addListener(new EcouteurReseau(buffer_etats_simulation));
 	}
-	
-	/*
-	private void show_progress_bar(){
-		ProgressBar bar = new ProgressBar(0);
-	    bar.setPrefSize(200, 24);
 
-	    Timeline task = new Timeline(
-	        new KeyFrame(
-	                Duration.ZERO,       
-	                new KeyValue(bar.progressProperty(), 0)
-	        ),
-	        new KeyFrame(
-	                Duration.seconds(2), 
-	                new KeyValue(bar.progressProperty(), 1)
-	        )
-	    );
-	    //todo calcul du lancement du serveur
-	    int i = 0;
-	    while (i< 100000){
-	    	task.playFromStart();
-	    	i++;
-	    }
-	    this.init_root_layout();
-	    Label loading = new Label("Initialisation du serveur");
-
-	    VBox layout = new VBox(10);
-	    layout.getChildren().setAll(
-	        loading, bar
-	    );
-	    layout.setPadding(new Insets(10));
-	    layout.setAlignment(Pos.CENTER);
-	    layout.getStylesheets().add(getClass().getResource("../vue/css/progress_bar.css").toExternalForm());
-	    //Stage stage = (Stage) manuel.getScene().getWindow();
-	    Stage stage_progress_bar = new Stage();
-	    stage_progress_bar.setHeight(100);
-	    stage_progress_bar.setWidth(200);
-        stage_progress_bar.setScene(new Scene(layout));
-        stage_progress_bar.show();
-	}
-	**/
 }

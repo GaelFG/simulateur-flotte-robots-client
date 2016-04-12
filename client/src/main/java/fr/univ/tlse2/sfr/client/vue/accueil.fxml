@@ -37,15 +37,15 @@
             </RadioButton>
             <RadioButton fx:id="auto" mnemonicParsing="false" text="Définir les paramètres" toggleGroup="$radio1" GridPane.columnSpan="2" GridPane.rowIndex="2" />
             <RadioButton fx:id="conf" mnemonicParsing="false" text="Lire les paramètres dans un fichier" toggleGroup="$radio1" GridPane.columnSpan="2" GridPane.rowIndex="5" />
-            <Label fx:id="nom_fichier" alignment="CENTER" prefHeight="15.0" prefWidth="380.0" text="Pas de fichier sélectionné." GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <Label fx:id="nom_fichier" alignment="CENTER" disable="true" prefHeight="15.0" prefWidth="380.0" text="Pas de fichier sélectionné." GridPane.columnIndex="1" GridPane.rowIndex="6" />
             <Button fx:id="valider" contentDisplay="CENTER" mnemonicParsing="false" text="Démarrer la simulation" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="CENTER" />
-            <Label fx:id="label_nb_robots" text="Nombre de robot(s) :" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+            <Label fx:id="label_nb_robots" disable="true" text="Nombre de robot(s) :" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                <GridPane.margin>
                   <Insets />
                </GridPane.margin>
             </Label>
             <Button fx:id="parcourir" alignment="CENTER" disable="true" mnemonicParsing="false" text="Parcourir" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
-            <TextField fx:id="input_nb_robot" alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <TextField fx:id="input_nb_robot" alignment="CENTER" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <padding>
                   <Insets left="10.0" right="10.0" />
                </padding>
@@ -53,8 +53,8 @@
                   <Insets left="10.0" right="10.0" />
                </GridPane.margin>
             </TextField>
-            <Label fx:id="label_nb_obstacles" alignment="CENTER_RIGHT" text="Nombre d'obstacle(s) :" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
-            <TextField fx:id="input_nb_obstacle" alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="4">
+            <Label fx:id="label_nb_obstacles" alignment="CENTER_RIGHT" disable="true" text="Nombre d'obstacle(s) :" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+            <TextField fx:id="input_nb_obstacle" alignment="CENTER" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <padding>
                   <Insets left="10.0" right="10.0" />
                </padding>
