@@ -3,36 +3,24 @@ package fr.univ.tlse2.sfr.client.controlleur;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import javafx.util.Duration;
-
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-
 import com.esotericsoftware.kryonet.Client;
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Text;
-
 import fr.univ.tlse2.sfr.client.App;
 import fr.univ.tlse2.sfr.client.EcouteurReseau;
 import fr.univ.tlse2.sfr.client.EcouteurReseauAffichageSimulation;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -45,31 +33,23 @@ import fr.univ.tlse2.sfr.communication.EnregistreurKryo;
 import fr.univ.tlse2.sfr.communication.EtatCarte;
 import fr.univ.tlse2.sfr.communication.EtatRobot;
 import fr.univ.tlse2.sfr.communication.EtatSimulation;
-import fr.univ.tlse2.sfr.communication.MessageTexte;
+
 
 public class ControlleurAccueil {
-	
 	@FXML
 	private RadioButton manuel;
-	
 	@FXML
 	private RadioButton auto;
-	
 	@FXML
 	private RadioButton conf;
-	
 	@FXML
 	private Label nom_fichier;
-	
 	@FXML
 	private Button valider;
-	
 	@FXML
 	private TextField input_nb_robot;
-	
 	@FXML
 	private TextField input_nb_obstacle;
-	
 	@FXML
 	private Button parcourir;
 	
@@ -77,19 +57,13 @@ public class ControlleurAccueil {
 	public static Client connecteur_kryo;
 	private List<EtatSimulation> buffer_etats_simulation;
 	private EtatCarte carte;
-	
 	private BorderPane root_layout;
 
 	/**
-	 * 
 	 * Le fichier de config choisit par l'utilisateur
 	 */
 	private File selectedFile = null;
 	
-	
-	/**
-	 * The constructor (is called before the initialize()-method).
-	 */
 	public ControlleurAccueil() {
 		
 	}
@@ -100,6 +74,20 @@ public class ControlleurAccueil {
 	 */
 	@FXML
 	private void initialize() {
+		conf.setOnAction((event) -> {
+			parcourir.setDisable(false);
+		});
+		manuel.setOnAction((event) -> {
+			parcourir.setDisable(true);
+		});
+		auto.setOnAction((event) -> {
+			parcourir.setDisable(true);
+		});
+		definir_action_bouton_parcourir();
+		definir_action_bouton_lancer_simulation();
+	}
+	
+	private void definir_action_bouton_lancer_simulation() {
 		valider.setOnAction((event) -> {
 			boolean error = false;
 			if(auto.isSelected()){
@@ -107,25 +95,25 @@ public class ControlleurAccueil {
 					int value_robot = Integer.parseInt(input_nb_robot.getText());
 					int value_obstacle = Integer.parseInt(input_nb_obstacle.getText());
 					if(value_robot <= 0 && value_obstacle <= 0){
-						this.show_error_dialog("Saisir un nombre positif de robot et d'obstacle!");
+						this.afficher_fenetre_modale_d_erreur("Saisir un nombre positif de robot et d'obstacle!");
 						error = true;
 					}else if(value_obstacle <= 0){
-						this.show_error_dialog("Saisir un nombre positif d'obstacle !");
+						this.afficher_fenetre_modale_d_erreur("Saisir un nombre positif d'obstacle !");
 						error = true;
 					}else if(value_robot <= 0){
-						this.show_error_dialog("Saisir un nombre positif de robot !");
+						this.afficher_fenetre_modale_d_erreur("Saisir un nombre positif de robot !");
 						error = true;
 					}else{
 						this.init_root_layout();
 					}
 				}catch(Exception e){
-					this.show_error_dialog("Saisir un nombre valide de robot et d'obstacle!");
+					this.afficher_fenetre_modale_d_erreur("Saisir un nombre valide de robot et d'obstacle!");
 					error = true;
 				}
 			}
 			if(conf.isSelected()){
 				if(this.selectedFile == null){
-					this.show_error_dialog("Le fichier de configuration n'est pas choisi !");
+					this.afficher_fenetre_modale_d_erreur("Le fichier de configuration n'est pas choisi !");
 					error = true;
 				}else{
 					this.init_root_layout();
@@ -133,7 +121,7 @@ public class ControlleurAccueil {
 			}
 			if(!manuel.isSelected() && !auto.isSelected() && !conf.isSelected()){
 				// aucun bouton radio selectionne => affichage message erreur
-				this.show_error_dialog("Choisir une option !");
+				this.afficher_fenetre_modale_d_erreur("Choisir une option !");
 				error = true;
 			}else{
 				if(!error){
@@ -141,21 +129,9 @@ public class ControlleurAccueil {
 				}
 			}
 		});
-		
-		conf.setOnAction((event) -> {
-			if(conf.isSelected()){
-				parcourir.setDisable(false);
-			}
-		});
-		
-		manuel.setOnAction((event) -> {
-			parcourir.setDisable(true);
-		});
-		
-		auto.setOnAction((event) -> {
-			parcourir.setDisable(true);
-		});
-		
+	}
+	
+	private void definir_action_bouton_parcourir() {
 		parcourir.setOnAction((event) -> {
 			this.selectedFile = null;
 			FileChooser chooser = new FileChooser();
@@ -163,22 +139,21 @@ public class ControlleurAccueil {
 			chooser.getExtensionFilters().add(extensionFilter);
 			this.selectedFile = chooser.showOpenDialog(null);
 			if(this.selectedFile != null){
-				nom_fichier.setText("Fichier sÃ©lectionnÃ© : " + selectedFile.getName());
+				nom_fichier.setText("Fichier sélectionné : " + selectedFile.getName());
 				// todo : envoyer le fichier a la fenetre de simulation => surement mettre en variable de classe
 				// le fichier
 			}else{
 				
 			}
 		});
-		
 	}
 	
-	private void show_error_dialog(String text){
-		Alert dialog = new Alert(Alert.AlertType.ERROR);
-		dialog.setHeaderText(text);
-		dialog.setResizable(true);
-		dialog.getDialogPane().setPrefSize(300, 100);
-		dialog.showAndWait();
+	private void afficher_fenetre_modale_d_erreur(String message){
+		Alert fenetre_modale = new Alert(Alert.AlertType.ERROR);
+		fenetre_modale.setHeaderText(message);
+		fenetre_modale.setResizable(true);
+		fenetre_modale.getDialogPane().setPrefSize(300, 100);
+		fenetre_modale.showAndWait();
 	}
 	private void init_root_layout(){
 		// here, launch the main application
@@ -222,7 +197,6 @@ public class ControlleurAccueil {
             ControlleurSimulation controleur_affichage_simulation = fxmlLoader.getController();
             connecteur_kryo.addListener(new EcouteurReseauAffichageSimulation(controleur_affichage_simulation));
             
-            
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -245,6 +219,7 @@ public class ControlleurAccueil {
 		connecteur_kryo.addListener(new EcouteurReseau(buffer_etats_simulation));
 	}
 	
+	/*
 	private void show_progress_bar(){
 		ProgressBar bar = new ProgressBar(0);
 	    bar.setPrefSize(200, 24);
@@ -282,4 +257,5 @@ public class ControlleurAccueil {
         stage_progress_bar.setScene(new Scene(layout));
         stage_progress_bar.show();
 	}
+	**/
 }

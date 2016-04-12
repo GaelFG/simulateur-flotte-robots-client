@@ -1,33 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.layout.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 
-<AnchorPane fx:id="accueil" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="360.0" prefWidth="400.0" stylesheets="@css/test.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.univ.tlse2.sfr.client.controlleur.ControlleurAccueil">
+<AnchorPane fx:id="accueil" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="240.0" minWidth="320.0" prefHeight="480.0" prefWidth="640.0" stylesheets="@css/test.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.univ.tlse2.sfr.client.controlleur.ControlleurAccueil">
    <children>
-      <Label layoutX="19.0" layoutY="14.0" text="Choix du mode">
-         <font>
-            <Font size="48.0" />
-         </font>
-      </Label>
-      <RadioButton fx:id="manuel" layoutX="34.0" layoutY="79.0" mnemonicParsing="false" text="Lancer manuellement">
-         <toggleGroup>
-            <ToggleGroup fx:id="radio1" />
-         </toggleGroup>
-      </RadioButton>
-      <RadioButton fx:id="auto" layoutX="34.0" layoutY="112.0" mnemonicParsing="false" text="Lancer automatiquement" toggleGroup="$radio1" />
-      <RadioButton fx:id="conf" layoutX="33.0" layoutY="214.0" mnemonicParsing="false" text="Charger fichier de configuration" toggleGroup="$radio1" />
-      <Label fx:id="nom_fichier" layoutX="13.0" layoutY="278.0" prefHeight="15.0" prefWidth="380.0" />
-      <Button fx:id="valider" layoutX="144.0" layoutY="318.0" mnemonicParsing="false" text="Valider" />
-      <Label layoutX="59.0" layoutY="147.0" text="Nombre de robot(s)" />
-      <Button fx:id="parcourir" disable="true" layoutX="78.0" layoutY="240.0" mnemonicParsing="false" text="Parcourir" />
-      <TextField fx:id="input_nb_robot" layoutX="216.0" layoutY="142.0" />
-      <Label layoutX="59.0" layoutY="183.0" text="Nombre d'obstacle(s)" />
-      <TextField fx:id="input_nb_obstacle" layoutX="217.0" layoutY="178.0" />
-      <Line endX="100.0" layoutX="104.0" layoutY="308.0" startX="-100.0" />
-      <Line endX="100.0" layoutX="304.0" layoutY="308.0" startX="-100.0" />
+      <GridPane layoutY="8.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="Choix du mode" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+               <font>
+                  <Font size="48.0" />
+               </font>
+            </Label>
+            <RadioButton fx:id="manuel" mnemonicParsing="false" text="Lancer manuellement" GridPane.columnSpan="2" GridPane.rowIndex="1">
+               <toggleGroup>
+                  <ToggleGroup fx:id="radio1" />
+               </toggleGroup>
+            </RadioButton>
+            <RadioButton fx:id="auto" mnemonicParsing="false" text="Lancer automatiquement" toggleGroup="$radio1" GridPane.columnSpan="2" GridPane.rowIndex="2" />
+            <RadioButton fx:id="conf" mnemonicParsing="false" text="Charger fichier de configuration" toggleGroup="$radio1" GridPane.columnSpan="2" GridPane.rowIndex="5" />
+            <Label fx:id="nom_fichier" alignment="CENTER" prefHeight="15.0" prefWidth="380.0" text="Pas de fichier sélectionné" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <Button fx:id="valider" contentDisplay="CENTER" mnemonicParsing="false" text="Valider" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="CENTER" />
+            <Label text="Nombre de robot(s) :" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+            </Label>
+            <Button fx:id="parcourir" alignment="CENTER" disable="true" mnemonicParsing="false" text="Parcourir" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
+            <TextField fx:id="input_nb_robot" alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <padding>
+                  <Insets left="10.0" right="10.0" />
+               </padding>
+               <GridPane.margin>
+                  <Insets left="10.0" right="10.0" />
+               </GridPane.margin>
+            </TextField>
+            <Label alignment="CENTER_RIGHT" text="Nombre d'obstacle(s) :" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+            <TextField fx:id="input_nb_obstacle" alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <padding>
+                  <Insets left="10.0" right="10.0" />
+               </padding>
+               <GridPane.margin>
+                  <Insets left="10.0" right="10.0" />
+               </GridPane.margin>
+            </TextField>
+         </children>
+      </GridPane>
    </children>
 </AnchorPane>

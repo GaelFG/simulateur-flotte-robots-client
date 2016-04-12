@@ -19,7 +19,7 @@ public class EcouteurReseau extends Listener{
 		this.buffer_etats_simulation = buffer_etats_simulation;
 	}
 	
-	/** Réagit à la reception d'un objet ssérialisé. */
+	/** Réagit à la reception d'un objet sérialisé. */
 	 public void received (Connection connection, Object object) {
 		 
 		 if (object instanceof MessageTexte) {
