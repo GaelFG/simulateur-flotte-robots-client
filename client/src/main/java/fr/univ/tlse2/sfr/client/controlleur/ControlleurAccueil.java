@@ -46,6 +46,12 @@ public class ControlleurAccueil {
 	private Label nom_fichier;
 	@FXML
 	private Button valider;
+	
+	@FXML
+	private Label label_nb_robots;
+	@FXML
+	private Label label_nb_obstacles;
+	
 	@FXML
 	private TextField input_nb_robot;
 	@FXML
@@ -76,12 +82,27 @@ public class ControlleurAccueil {
 	private void initialize() {
 		conf.setOnAction((event) -> {
 			parcourir.setDisable(false);
+			nom_fichier.setDisable(false);
+			label_nb_obstacles.setDisable(true);
+			label_nb_robots.setDisable(true);
+			input_nb_obstacle.setDisable(true);
+			input_nb_robot.setDisable(true);
 		});
 		manuel.setOnAction((event) -> {
 			parcourir.setDisable(true);
+			nom_fichier.setDisable(true);
+			label_nb_obstacles.setDisable(true);
+			label_nb_robots.setDisable(true);
+			input_nb_obstacle.setDisable(true);
+			input_nb_robot.setDisable(true);
 		});
 		auto.setOnAction((event) -> {
 			parcourir.setDisable(true);
+			nom_fichier.setDisable(true);
+			label_nb_obstacles.setDisable(false);
+			label_nb_robots.setDisable(false);
+			input_nb_obstacle.setDisable(false);
+			input_nb_robot.setDisable(false);
 		});
 		definir_action_bouton_parcourir();
 		definir_action_bouton_lancer_simulation();
