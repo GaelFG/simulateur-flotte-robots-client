@@ -24,9 +24,6 @@ import javafx.scene.transform.Rotate;
  * Controlleur de la frame simulation
  */
 public class ControlleurSimulation {
-	
-	private final static int FACTEUR_GROSSISSEMENT = 1;
-	
 	// Bouton play
 	@FXML
 	private Button play;
@@ -43,7 +40,7 @@ public class ControlleurSimulation {
 	private Canvas canvas_simulation;
 	@FXML
 	private AnchorPane simulation;
-	
+	private GraphicsContext contexte_graphique_du_canvas;
 	private Image sprite_blatte_a;
 	private Client connecteur_kryo;
 	
@@ -61,14 +58,11 @@ public class ControlleurSimulation {
 	@FXML
 	private void initialize() {
 		this.set_connecteur_kryo(ControlleurAccueil.connecteur_kryo);
-
-		// Handle Button event.
+		contexte_graphique_du_canvas = canvas_simulation.getGraphicsContext2D();
 		play.setOnAction((event) -> {
 			DemarrerSimulation lancement_simu = new DemarrerSimulation("simulation");
 			this.connecteur_kryo.sendTCP(lancement_simu);
 		});
-		
-		
 	}
 	
 	public void set_connecteur_kryo(Client connecteur_kryo)
@@ -76,39 +70,32 @@ public class ControlleurSimulation {
 		this.connecteur_kryo = connecteur_kryo;
 	}
 
-	// Dessine l'etatSimulation courant
-	public void dessiner(EtatSimulation etat_simulation) {
-        GraphicsContext gc = canvas_simulation.getGraphicsContext2D() ;
-        
+	public void dessiner_etat_simulation(EtatSimulation etat_simulation) {
         //Efface la frame précédente
-        gc.clearRect(0, 0, canvas_simulation.getWidth(), canvas_simulation.getHeight());
-        
+		contexte_graphique_du_canvas.clearRect(0, 0, canvas_simulation.getWidth(), canvas_simulation.getHeight());
         dessiner_carte(etat_simulation.carte);
         dessiner_robots(etat_simulation.liste_robots);
         dessiner_obstacles(etat_simulation.liste_obstacles);
 	}
 
 	private void dessiner_carte(EtatCarte etat_carte) {
-		GraphicsContext gc = canvas_simulation.getGraphicsContext2D();
-        gc.setStroke(Color.DARKGREY);
+		contexte_graphique_du_canvas.setStroke(Color.DARKGREY);
         double width = etat_carte.largeur;
 		double height = etat_carte.hauteur;
         
         for(int x = 0; x <= width; x = x + 16){
-        	gc.strokeLine(x, 0, x, height);
+        	contexte_graphique_du_canvas.strokeLine(x, 0, x, height);
         }
         for(int y = 0; y <= height; y = y+ 16){ 		
-    		gc.strokeLine(0, y, width, y);
+        	contexte_graphique_du_canvas.strokeLine(0, y, width, y);
     	}
 
 	}
 	
-	private void dessiner_obstacles(List<EtatObstacle> obstacles){
-		GraphicsContext gc = canvas_simulation.getGraphicsContext2D();
-		//dessiner les obstacles        
-        gc.setFill(Color.DIMGREY);
+	private void dessiner_obstacles(List<EtatObstacle> obstacles){    
+		contexte_graphique_du_canvas.setFill(Color.DIMGREY);
         for(EtatObstacle obstacle : obstacles){
-        	gc.fillRect((obstacle.position_obstacle.x - obstacle.taille), (obstacle.position_obstacle.y - obstacle.taille), obstacle.taille*2, obstacle.taille*2);
+        	contexte_graphique_du_canvas.fillRect((obstacle.position_obstacle.x - obstacle.taille), (obstacle.position_obstacle.y - obstacle.taille), obstacle.taille*2, obstacle.taille*2);
         }
 	}
 	
@@ -144,10 +131,9 @@ public class ControlleurSimulation {
     }
 	
 	private void dessiner_robots(List<EtatRobot> robots){
-		GraphicsContext gc = canvas_simulation.getGraphicsContext2D();
-		gc.setFill(Color.YELLOW);
+		contexte_graphique_du_canvas.setFill(Color.YELLOW);
 		for(EtatRobot etat : robots){
-			drawRotatedImage(gc, sprite_blatte_a, etat.orientation_robot+90, etat.pos_robot.x, etat.pos_robot.y);
+			drawRotatedImage(contexte_graphique_du_canvas, sprite_blatte_a, etat.orientation_robot+90, etat.pos_robot.x, etat.pos_robot.y);
         }
 	}
 }

@@ -3,45 +3,41 @@ package fr.univ.tlse2.sfr.client;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
 
-@SuppressWarnings("restriction")
 public class App extends Application {
-	
-	private Stage primary_stage;
+	private Stage fenetre_principale;
 	private BorderPane root_layout;
 	
 	@Override
+	/** Paramètre la fenêtre, initialise la connection au serveur puis affiche l'écran d'acceuil.*/
 	public void start(Stage primaryStage) {
-		
-		this.primary_stage = primaryStage;
-        this.primary_stage.setTitle("IHM Simulation Flotte Robots");
+		this.fenetre_principale = primaryStage;
+		parametrer_fenetre_principale();
         this.init_root_layout();
-        this.show_choice();
-        this.primary_stage.setHeight(360);
-        this.primary_stage.setWidth(400);
-        this.primary_stage.setResizable(false);
-        this.primary_stage.show();
+        this.fenetre_principale.show();
+        this.afficher_vue_accueil_application();
+	}
+	
+	private void parametrer_fenetre_principale(){
+		this.fenetre_principale.setTitle("IHM Simulation Flotte Robots");
+        this.fenetre_principale.setHeight(360);
+        this.fenetre_principale.setWidth(400);
+        this.fenetre_principale.setResizable(true);
 	}
 	
 	private void init_root_layout(){
-		// Initialize root layout
         root_layout = new BorderPane();
-
-        // Show the scene containing the root layout.
         Scene scene = new Scene(root_layout);
-        primary_stage.setScene(scene);
+        fenetre_principale.setScene(scene);
 	}
-
-	 public void show_choice() {        
+	
+	 public void afficher_vue_accueil_application() {        
 		try {
-			final ToggleGroup group = new ToggleGroup();
-			
 	        FXMLLoader fxmlLoader = new FXMLLoader();
 	        fxmlLoader.setLocation(App.class.getResource("vue/accueil.fxml"));
 	        fxmlLoader.setBuilderFactory(new JavaFXBuilderFactory());
@@ -52,7 +48,8 @@ public class App extends Application {
 			e.printStackTrace();
 		}
     }
-	
+
+	 /** Point d'entrée de l'application cliente. */
 	public static void main(String[] args) {
 		launch(args);
 	}

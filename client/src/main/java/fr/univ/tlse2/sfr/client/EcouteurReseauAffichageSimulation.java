@@ -15,12 +15,12 @@ public class EcouteurReseauAffichageSimulation extends Listener{
 		this.controleur_simulation = controleur_simulation;
 	}
 	
-	/** RÃ©agit Ã  la reception d'un objet sÃ©rialisÃ©. */
+	/** Réagit à  la reception d'un objet sérialisé. */
 	 public void received (Connection connection, Object object) {
 
 		 if (object instanceof EtatSimulation) {
 			 EtatSimulation etat_simulation = (EtatSimulation)object;
-			 controleur_simulation.dessiner(etat_simulation);
+			 controleur_simulation.dessiner_etat_simulation(etat_simulation);
          }
 		 
       }
