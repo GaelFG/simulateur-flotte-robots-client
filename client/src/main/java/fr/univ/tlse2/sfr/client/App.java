@@ -33,6 +33,10 @@ public class App extends Application {
 			Scene scene = new Scene(conteneur_racine, 640, 480);
 	        fenetre_principale.setScene(scene);
     }
+	 
+	public void afficher_vue_voir_simulation() throws IOException {
+			//TODO
+}
 
 	 /** Point d'entrée de l'application cliente. */
 	public static void main(String[] args) {

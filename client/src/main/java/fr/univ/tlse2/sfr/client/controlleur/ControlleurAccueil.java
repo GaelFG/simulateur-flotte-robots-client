@@ -21,6 +21,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -63,7 +64,7 @@ public class ControlleurAccueil {
 	public static Client connecteur_kryo;
 	private List<EtatSimulation> buffer_etats_simulation;
 	private EtatCarte carte;
-	private BorderPane root_layout;
+	private Parent conteneur_racine;
 
 	/**
 	 * Le fichier de config choisit par l'utilisateur
@@ -112,7 +113,7 @@ public class ControlleurAccueil {
 		valider.setOnAction((event) -> {
 			
 			if (manuel.isSelected()) {
-				this.init_root_layout();
+				this.afficher_vue_voir_simulation();
 			}
 			
 			if (auto.isSelected()) {
@@ -164,54 +165,34 @@ public class ControlleurAccueil {
 		Alert fenetre_modale = new Alert(Alert.AlertType.ERROR);
 		fenetre_modale.setHeaderText(message);
 		fenetre_modale.setResizable(true);
-		fenetre_modale.getDialogPane().setPrefSize(300, 100);
+		fenetre_modale.getDialogPane().setPrefSize(640, 240);
 		fenetre_modale.showAndWait();
 	}
-	private void init_root_layout(){
-		// here, launch the main application
-        try {
+	private void afficher_vue_voir_simulation() {
+			buffer_etats_simulation = Collections.synchronizedList(new LinkedList<EtatSimulation>());
+			initialiser_connecteur_kryo("127.0.0.1", 8073);
         	FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(App.class.getResource("vue/RootLayout.fxml"));
-			root_layout = (BorderPane) loader.load();
-			Scene scene = new Scene(root_layout);
+			loader.setLocation(App.class.getResource("vue/Simulation.fxml"));
+			try {
+				conteneur_racine = loader.load();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			Scene scene = new Scene(conteneur_racine);
 			Stage stage = (Stage) manuel.getScene().getWindow();
 			stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-				
 				@Override
 				public void handle(WindowEvent event) {
 					System.out.println("il faut stop le calcul pour la simulation en cours");
 					connecteur_kryo.sendTCP(new ArreterSimulation());
 				}
 			});
-			stage.setHeight(1000);
-	        stage.setWidth(1200);
-	        stage.setResizable(true);
 			stage.setScene(scene);
-			this.show_simulation();
-			stage.show();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	private void show_simulation(){
-		// initialize network connection
-		buffer_etats_simulation = Collections.synchronizedList(new LinkedList<EtatSimulation>());
-		initialiser_connecteur_kryo("127.0.0.1", 8073);
-		try {
-			FXMLLoader fxmlLoader = new FXMLLoader();
-	        fxmlLoader.setLocation(App.class.getResource("vue/Simulation.fxml"));
-	        fxmlLoader.setBuilderFactory(new JavaFXBuilderFactory());
-            AnchorPane simulation = (AnchorPane) fxmlLoader.load();
-            root_layout.setCenter(simulation);
-
-    		//ajouter l'ecouteur reseau adapté
-            ControlleurSimulation controleur_affichage_simulation = fxmlLoader.getController();
+			//ajouter l'ecouteur reseau adapté
+            ControlleurSimulation controleur_affichage_simulation = loader.getController();
             connecteur_kryo.addListener(new EcouteurReseauAffichageSimulation(controleur_affichage_simulation));
-            
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+			stage.show();
 	}
 	
 	private void initialiser_connecteur_kryo(String url_serveur, int port_tcp) {

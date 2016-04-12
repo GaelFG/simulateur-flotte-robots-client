@@ -14,6 +14,7 @@ import fr.univ.tlse2.sfr.communication.EtatSimulation;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
@@ -59,10 +60,6 @@ public class ControlleurSimulation {
 	private void initialize() {
 		this.set_connecteur_kryo(ControlleurAccueil.connecteur_kryo);
 		contexte_graphique_du_canvas = canvas_simulation.getGraphicsContext2D();
-		play.setOnAction((event) -> {
-			DemarrerSimulation lancement_simu = new DemarrerSimulation("simulation");
-			this.connecteur_kryo.sendTCP(lancement_simu);
-		});
 	}
 	
 	public void set_connecteur_kryo(Client connecteur_kryo)
@@ -135,5 +132,30 @@ public class ControlleurSimulation {
 		for(EtatRobot etat : robots){
 			drawRotatedImage(contexte_graphique_du_canvas, sprite_blatte_a, etat.orientation_robot+90, etat.pos_robot.x, etat.pos_robot.y);
         }
+	}
+	
+	public void reagir_action_bouton_demarrer() {
+		DemarrerSimulation lancement_simu = new DemarrerSimulation("simulation");
+		this.connecteur_kryo.sendTCP(lancement_simu);
+	}
+	
+	public void reagir_action_bouton_ralentir() {
+		afficher_fenetre_modale_d_erreur("La fonctionnalité 'Ralentir la simulation' n'est pas implémentée.");	
+	}
+	
+	public void reagir_action_bouton_accelerer() {
+		afficher_fenetre_modale_d_erreur("La fonctionnalité 'Accélerer la simulation' n'est pas implémentée.");	
+	}
+	
+	public void reagir_action_bouton_pause() {
+		afficher_fenetre_modale_d_erreur("La fonctionnalité 'Mettre en pause la simulation' n'est pas implémentée.");	
+	}
+	
+	private void afficher_fenetre_modale_d_erreur(String message){
+		Alert fenetre_modale = new Alert(Alert.AlertType.ERROR);
+		fenetre_modale.setHeaderText(message);
+		fenetre_modale.setResizable(true);
+		fenetre_modale.getDialogPane().setPrefSize(640, 240);
+		fenetre_modale.showAndWait();
 	}
 }
