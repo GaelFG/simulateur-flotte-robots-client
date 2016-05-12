@@ -8,7 +8,7 @@ import fr.univ.tlse2.sfr.communication.EtatSimulation;
 import fr.univ.tlse2.sfr.communication.MessageTexte;
 
 /**
- * L'Ã©couteur rÃ©seau du serveur. DÃ©finit la rÃ©action du serveur aux messages envoyÃ©s.
+ * L'éscouteur réseau du serveur. Définit la réaction du serveur aux messages envoyés.
  */
 public class EcouteurReseau extends Listener{
 	
@@ -19,7 +19,7 @@ public class EcouteurReseau extends Listener{
 		this.buffer_etats_simulation = buffer_etats_simulation;
 	}
 	
-	/** RÃ©agit Ã  la reception d'un objet sÃ©rialisÃ©. */
+	/** Réagit à la reception d'un objet sérialisé. */
 	 public void received (Connection connection, Object object) {
 		 
 		 if (object instanceof MessageTexte) {

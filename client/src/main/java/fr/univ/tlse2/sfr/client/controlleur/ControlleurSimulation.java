@@ -14,6 +14,7 @@ import fr.univ.tlse2.sfr.communication.EtatSimulation;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
@@ -24,10 +25,6 @@ import javafx.scene.transform.Rotate;
  * Controlleur de la frame simulation
  */
 public class ControlleurSimulation {
-	
-	private final static int FACTEUR_GROSSISSEMENT = 10;
-	private final static int MOITIEE_FACTEUR_GROSSISSEMENT = FACTEUR_GROSSISSEMENT/2;
-	
 	// Bouton play
 	@FXML
 	private Button play;
@@ -44,7 +41,7 @@ public class ControlleurSimulation {
 	private Canvas canvas_simulation;
 	@FXML
 	private AnchorPane simulation;
-	
+	private GraphicsContext contexte_graphique_du_canvas;
 	private Image sprite_blatte_a;
 	private Client connecteur_kryo;
 	
@@ -61,15 +58,8 @@ public class ControlleurSimulation {
 	 */
 	@FXML
 	private void initialize() {
-
-		// Handle Button event.
-		play.setOnAction((event) -> {
-			System.out.println("Button Action");
-			DemarrerSimulation lancement_simu = new DemarrerSimulation("simulation");
-			connecteur_kryo.sendTCP(lancement_simu);
-		});
-		
-		
+		this.set_connecteur_kryo(ControlleurAccueil.connecteur_kryo);
+		contexte_graphique_du_canvas = canvas_simulation.getGraphicsContext2D();
 	}
 	
 	public void set_connecteur_kryo(Client connecteur_kryo)
@@ -77,38 +67,32 @@ public class ControlleurSimulation {
 		this.connecteur_kryo = connecteur_kryo;
 	}
 
-	// Dessine l'etatSimulation courant
-	public void dessiner(EtatSimulation etat_simulation) {
-        GraphicsContext gc = canvas_simulation.getGraphicsContext2D() ;
-        
-        //Efface la frame prÃ©cÃ©dente
-        gc.clearRect(0, 0, canvas_simulation.getWidth(), canvas_simulation.getHeight());
+	public void dessiner_etat_simulation(EtatSimulation etat_simulation) {
+        //Efface la frame précédente
+		contexte_graphique_du_canvas.clearRect(0, 0, canvas_simulation.getWidth(), canvas_simulation.getHeight());
         dessiner_carte(etat_simulation.carte);
         dessiner_robots(etat_simulation.liste_robots);
         dessiner_obstacles(etat_simulation.liste_obstacles);
 	}
 
 	private void dessiner_carte(EtatCarte etat_carte) {
-		GraphicsContext gc = canvas_simulation.getGraphicsContext2D();
-        gc.setStroke(Color.BLUEVIOLET);
-        double width = etat_carte.largeur * FACTEUR_GROSSISSEMENT;
-		double height = etat_carte.hauteur * FACTEUR_GROSSISSEMENT;
+		contexte_graphique_du_canvas.setStroke(Color.DARKGREY);
+        double width = etat_carte.largeur;
+		double height = etat_carte.hauteur;
         
-        for(int x = 0; x <= width; x = x + FACTEUR_GROSSISSEMENT){
-        	gc.strokeLine(x, 0, x, height);
+        for(int x = 0; x <= width; x = x + 16){
+        	contexte_graphique_du_canvas.strokeLine(x, 0, x, height);
         }
-        for(int y = 0; y <= height; y = y + FACTEUR_GROSSISSEMENT){ 		
-    		gc.strokeLine(0, y, width, y);
+        for(int y = 0; y <= height; y = y+ 16){ 		
+        	contexte_graphique_du_canvas.strokeLine(0, y, width, y);
     	}
 
 	}
 	
-	private void dessiner_obstacles(List<EtatObstacle> obstacles){
-		GraphicsContext gc = canvas_simulation.getGraphicsContext2D();
-		//dessiner les obstacles        
-        gc.setFill(Color.RED);
+	private void dessiner_obstacles(List<EtatObstacle> obstacles){    
+		contexte_graphique_du_canvas.setFill(Color.DIMGREY);
         for(EtatObstacle obstacle : obstacles){
-        	gc.fillRect((obstacle.position_obstacle.x - obstacle.taille)*FACTEUR_GROSSISSEMENT, (obstacle.position_obstacle.y - obstacle.taille)*FACTEUR_GROSSISSEMENT, obstacle.taille*2*FACTEUR_GROSSISSEMENT, obstacle.taille*2*FACTEUR_GROSSISSEMENT);
+        	contexte_graphique_du_canvas.fillRect((obstacle.position_obstacle.x - obstacle.taille), (obstacle.position_obstacle.y - obstacle.taille), obstacle.taille*2, obstacle.taille*2);
         }
 	}
 	
@@ -144,10 +128,34 @@ public class ControlleurSimulation {
     }
 	
 	private void dessiner_robots(List<EtatRobot> robots){
-		GraphicsContext gc = canvas_simulation.getGraphicsContext2D();
-		gc.setFill(Color.YELLOW);
+		contexte_graphique_du_canvas.setFill(Color.YELLOW);
 		for(EtatRobot etat : robots){
-			drawRotatedImage(gc, sprite_blatte_a, etat.orientation_robot+90, etat.pos_robot.x*FACTEUR_GROSSISSEMENT, etat.pos_robot.y*FACTEUR_GROSSISSEMENT);
+			drawRotatedImage(contexte_graphique_du_canvas, sprite_blatte_a, etat.orientation_robot+90, etat.pos_robot.x, etat.pos_robot.y);
         }
+	}
+	
+	public void reagir_action_bouton_demarrer() {
+		DemarrerSimulation lancement_simu = new DemarrerSimulation("simulation");
+		this.connecteur_kryo.sendTCP(lancement_simu);
+	}
+	
+	public void reagir_action_bouton_ralentir() {
+		afficher_fenetre_modale_d_erreur("La fonctionnalité 'Ralentir la simulation' n'est pas implémentée.");	
+	}
+	
+	public void reagir_action_bouton_accelerer() {
+		afficher_fenetre_modale_d_erreur("La fonctionnalité 'Accélerer la simulation' n'est pas implémentée.");	
+	}
+	
+	public void reagir_action_bouton_pause() {
+		afficher_fenetre_modale_d_erreur("La fonctionnalité 'Mettre en pause la simulation' n'est pas implémentée.");	
+	}
+	
+	private void afficher_fenetre_modale_d_erreur(String message){
+		Alert fenetre_modale = new Alert(Alert.AlertType.ERROR);
+		fenetre_modale.setHeaderText(message);
+		fenetre_modale.setResizable(true);
+		fenetre_modale.getDialogPane().setPrefSize(640, 240);
+		fenetre_modale.showAndWait();
 	}
 }
