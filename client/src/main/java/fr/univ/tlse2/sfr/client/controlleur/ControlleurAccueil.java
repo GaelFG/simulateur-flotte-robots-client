@@ -24,6 +24,13 @@ import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import fr.univ.tlse2.sfr.communication.ArreterSimulation;
+import fr.univ.tlse2.sfr.communication.DemarrerSimulation;
+import fr.univ.tlse2.sfr.communication.EnregistreurKryo;
+import fr.univ.tlse2.sfr.communication.EtatCarte;
+import fr.univ.tlse2.sfr.communication.EtatRobot;
+import fr.univ.tlse2.sfr.communication.EtatSimulation;
+import fr.univ.tlse2.sfr.communication.MessageTexte;
 
 
 public class ControlleurAccueil {
@@ -114,7 +121,7 @@ public class ControlleurAccueil {
 					}else if(value_robot <= 0){
 						this.afficher_fenetre_modale_d_erreur("Saisir un nombre positif de robots !");
 					}else{
-						afficher_fenetre_modale_d_erreur("La fonctionnalité 'Paramétrer le nombre de robots et d'obstacles sur la simulation' n'est pas implémentée.");
+						afficher_fenetre_modale_d_erreur("La fonctionnalitï¿½ 'Paramï¿½trer le nombre de robots et d'obstacles sur la simulation' n'est pas implï¿½mentï¿½e.");
 					}
 				}catch(Exception e){
 					this.afficher_fenetre_modale_d_erreur("Saisir un nombre valide de robots et d'obstacles !");
@@ -123,9 +130,9 @@ public class ControlleurAccueil {
 			
 			if(conf.isSelected()){
 				if(this.selectedFile == null){
-					this.afficher_fenetre_modale_d_erreur("Aucun fichier configuration valide sélectionné !");
+					this.afficher_fenetre_modale_d_erreur("Aucun fichier configuration valide sï¿½lectionnï¿½ !");
 				}else{
-					afficher_fenetre_modale_d_erreur("La fonctionnalité 'Charger des paramètres de simulation depuis un fichier externe' n'est pas implémentée.");
+					afficher_fenetre_modale_d_erreur("La fonctionnalitï¿½ 'Charger des paramï¿½tres de simulation depuis un fichier externe' n'est pas implï¿½mentï¿½e.");
 				}
 			}
 		});
@@ -139,7 +146,7 @@ public class ControlleurAccueil {
 			chooser.getExtensionFilters().add(extensionFilter);
 			this.selectedFile = chooser.showOpenDialog(null);
 			if(this.selectedFile != null){
-				nom_fichier.setText("Fichier sélectionné : " + selectedFile.getName());
+				nom_fichier.setText("Fichier sï¿½lectionnï¿½ : " + selectedFile.getName());
 				// todo : envoyer le fichier a la fenetre de simulation => surement mettre en variable de classe
 				// le fichier
 			}else{
@@ -174,12 +181,12 @@ public class ControlleurAccueil {
 			stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 				@Override
 				public void handle(WindowEvent event) {
-					System.out.println("il faut arrêter le calcul pour la simulation en cours");
+					System.out.println("il faut arrï¿½ter le calcul pour la simulation en cours");
 					connecteur_kryo.sendTCP(new ArreterSimulation());
 				}
 			});
 			stage.setScene(scene);
-			//ajouter l'ecouteur reseau adapté
+			//ajouter l'ecouteur reseau adaptï¿½
             ControlleurSimulation controleur_affichage_simulation = loader.getController();
             connecteur_kryo.addListener(new EcouteurReseauAffichageSimulation(controleur_affichage_simulation));
 			stage.show();
