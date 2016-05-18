@@ -1,23 +1,37 @@
 package fr.univ.tlse2.sfr.client.controlleur;
 
 import fr.univ.tlse2.sfr.communication.EtatObstacle;
+
+import java.awt.Event;
 import java.util.List;
 
 import com.esotericsoftware.kryonet.Client;
 
+import fr.univ.tlse2.sfr.communication.AjouterObstacle;
+import fr.univ.tlse2.sfr.communication.AjouterRobot;
 import fr.univ.tlse2.sfr.communication.DemarrerSimulation;
 import fr.univ.tlse2.sfr.communication.EtatCarte;
 import fr.univ.tlse2.sfr.communication.EtatRobot;
 
 import fr.univ.tlse2.sfr.communication.EtatSimulation;
-
+import fr.univ.tlse2.sfr.communication.PauseSimulation;
+import fr.univ.tlse2.sfr.communication.Position;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.transform.Rotate;
 
@@ -60,6 +74,35 @@ public class ControlleurSimulation {
 	private void initialize() {
 		this.set_connecteur_kryo(ControlleurAccueil.connecteur_kryo);
 		contexte_graphique_du_canvas = canvas_simulation.getGraphicsContext2D();
+		canvas_simulation.addEventHandler(MouseEvent.MOUSE_CLICKED,
+			new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent t) {
+            	final ContextMenu contextMenu = new ContextMenu();
+            	//TODO: gÃ©rer le dÃ©pop des fenÃªtres...
+                if (t.getClickCount() > 1) { //double click
+                    MenuItem ajouter_robot = new MenuItem("Ajouter robot");
+                    ajouter_robot.setOnAction(new EventHandler<ActionEvent>() {
+						@Override
+						public void handle(ActionEvent event) {
+							System.out.println("on veut ajouter un robot");
+							connecteur_kryo.sendTCP(new AjouterRobot(new Position(t.getScreenX(),t.getScreenY())));
+						}
+                    });
+                    
+                    MenuItem ajouter_obstacle = new MenuItem("Ajouter obstacle");
+                    ajouter_obstacle.setOnAction(new EventHandler<ActionEvent>() {
+						@Override
+						public void handle(ActionEvent event) {
+							System.out.println("on veut ajouter un obstacle");
+							connecteur_kryo.sendTCP(new AjouterObstacle(new Position(t.getScreenX(),t.getScreenY())));
+						}
+                    });
+                    
+                    contextMenu.getItems().addAll(ajouter_robot,ajouter_obstacle);                  
+                    contextMenu.show(canvas_simulation, t.getScreenX(), t.getScreenY());
+                }  
+            }
+        });
 	}
 	
 	public void set_connecteur_kryo(Client connecteur_kryo)
@@ -68,7 +111,7 @@ public class ControlleurSimulation {
 	}
 
 	public void dessiner_etat_simulation(EtatSimulation etat_simulation) {
-        //Efface la frame précédente
+        //Efface la frame prÃ©cÃ©dente
 		contexte_graphique_du_canvas.clearRect(0, 0, canvas_simulation.getWidth(), canvas_simulation.getHeight());
         dessiner_carte(etat_simulation.carte);
         dessiner_robots(etat_simulation.liste_robots);
@@ -140,15 +183,16 @@ public class ControlleurSimulation {
 	}
 	
 	public void reagir_action_bouton_ralentir() {
-		afficher_fenetre_modale_d_erreur("La fonctionnalité 'Ralentir la simulation' n'est pas implémentée.");	
+		afficher_fenetre_modale_d_erreur("La fonctionnalitÃ© 'Ralentir la simulation' n'est pas implÃ©mentÃ©e.");	
 	}
 	
 	public void reagir_action_bouton_accelerer() {
-		afficher_fenetre_modale_d_erreur("La fonctionnalité 'Accélerer la simulation' n'est pas implémentée.");	
+		afficher_fenetre_modale_d_erreur("La fonctionnalitÃ© 'AccÃ©lerer la simulation' n'est pas implÃ©mentÃ©e.");	
 	}
 	
 	public void reagir_action_bouton_pause() {
-		afficher_fenetre_modale_d_erreur("La fonctionnalité 'Mettre en pause la simulation' n'est pas implémentée.");	
+		PauseSimulation pause_simu = new PauseSimulation();
+		this.connecteur_kryo.sendTCP(pause_simu);
 	}
 	
 	private void afficher_fenetre_modale_d_erreur(String message){
