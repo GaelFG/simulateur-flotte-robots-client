@@ -86,7 +86,7 @@ public class ControlleurSimulation {
 						@Override
 						public void handle(ActionEvent event) {
 							System.out.println("on veut ajouter un robot");
-							connecteur_kryo.sendTCP(new AjouterRobot(new Position(t.getScreenX(),t.getScreenY())));
+							connecteur_kryo.sendTCP(new AjouterRobot(new Position(t.getX(),t.getY())));
 						}
                     });
                     
@@ -95,7 +95,7 @@ public class ControlleurSimulation {
 						@Override
 						public void handle(ActionEvent event) {
 							System.out.println("on veut ajouter un obstacle");
-							connecteur_kryo.sendTCP(new AjouterObstacle(new Position(t.getScreenX(),t.getScreenY())));
+							connecteur_kryo.sendTCP(new AjouterObstacle(new Position(t.getX(),t.getY())));
 						}
                     });
                     
