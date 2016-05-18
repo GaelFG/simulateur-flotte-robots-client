@@ -1,8 +1,5 @@
 package fr.univ.tlse2.sfr.client.controlleur;
 
-import fr.univ.tlse2.sfr.communication.EtatObstacle;
-
-import java.awt.Event;
 import java.util.List;
 
 import com.esotericsoftware.kryonet.Client;
@@ -11,8 +8,8 @@ import fr.univ.tlse2.sfr.communication.AjouterObstacle;
 import fr.univ.tlse2.sfr.communication.AjouterRobot;
 import fr.univ.tlse2.sfr.communication.DemarrerSimulation;
 import fr.univ.tlse2.sfr.communication.EtatCarte;
+import fr.univ.tlse2.sfr.communication.EtatObstacle;
 import fr.univ.tlse2.sfr.communication.EtatRobot;
-
 import fr.univ.tlse2.sfr.communication.EtatSimulation;
 import fr.univ.tlse2.sfr.communication.ParametresSimulation;
 import fr.univ.tlse2.sfr.communication.PauseSimulation;
@@ -20,19 +17,15 @@ import fr.univ.tlse2.sfr.communication.Position;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
-import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.transform.Rotate;
 
@@ -59,6 +52,7 @@ public class ControlleurSimulation {
 	private GraphicsContext contexte_graphique_du_canvas;
 	private Image sprite_blatte_a;
 	private Client connecteur_kryo;
+	public ParametresSimulation parametres_initiaux_simulation;
 	
 	/**
 	 * The constructor (is called before the initialize()-method).
@@ -79,7 +73,7 @@ public class ControlleurSimulation {
 			new EventHandler<MouseEvent>() {
             public void handle(MouseEvent t) {
             	final ContextMenu contextMenu = new ContextMenu();
-            	//TODO: gÃ©rer le dÃ©pop des fenÃªtres...
+            	//TODO: gérer le dépop des fenêtres...
                 if (t.getClickCount() > 1) { //double click
                     MenuItem ajouter_robot = new MenuItem("Ajouter robot");
                     ajouter_robot.setOnAction(new EventHandler<ActionEvent>() {
@@ -112,7 +106,7 @@ public class ControlleurSimulation {
 	}
 
 	public void dessiner_etat_simulation(EtatSimulation etat_simulation) {
-        //Efface la frame prÃ©cÃ©dente
+        //Efface la frame précédente
 		contexte_graphique_du_canvas.clearRect(0, 0, canvas_simulation.getWidth(), canvas_simulation.getHeight());
         dessiner_carte(etat_simulation.carte);
         dessiner_robots(etat_simulation.liste_robots);
@@ -179,7 +173,7 @@ public class ControlleurSimulation {
 	}
 	
 	public void reagir_action_bouton_demarrer() {
-		DemarrerSimulation lancement_simu = new DemarrerSimulation(new ParametresSimulation("simulation", 10, 10));
+		DemarrerSimulation lancement_simu = new DemarrerSimulation(parametres_initiaux_simulation);
 		this.connecteur_kryo.sendTCP(lancement_simu);
 	}
 	

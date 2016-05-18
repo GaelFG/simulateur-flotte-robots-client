@@ -10,6 +10,7 @@ import fr.univ.tlse2.sfr.client.EcouteurReseau;
 import fr.univ.tlse2.sfr.client.EcouteurReseauAffichageSimulation;
 import fr.univ.tlse2.sfr.communication.ArreterSimulation;
 import fr.univ.tlse2.sfr.communication.EnregistreurKryo;
+import fr.univ.tlse2.sfr.communication.ParametresSimulation;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,13 +25,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import fr.univ.tlse2.sfr.communication.ArreterSimulation;
-import fr.univ.tlse2.sfr.communication.DemarrerSimulation;
-import fr.univ.tlse2.sfr.communication.EnregistreurKryo;
-import fr.univ.tlse2.sfr.communication.EtatCarte;
-import fr.univ.tlse2.sfr.communication.EtatRobot;
-import fr.univ.tlse2.sfr.communication.EtatSimulation;
-import fr.univ.tlse2.sfr.communication.MessageTexte;
 
 
 public class ControlleurAccueil {
@@ -107,7 +101,7 @@ public class ControlleurAccueil {
 		valider.setOnAction((event) -> {
 			
 			if (manuel.isSelected()) {
-				this.afficher_vue_voir_simulation();
+				this.afficher_vue_voir_simulation(new ParametresSimulation("Simulation par défaut", 10, 10));
 			}
 			
 			if (auto.isSelected()) {
@@ -121,7 +115,7 @@ public class ControlleurAccueil {
 					}else if(value_robot <= 0){
 						this.afficher_fenetre_modale_d_erreur("Saisir un nombre positif de robots !");
 					}else{
-						afficher_fenetre_modale_d_erreur("La fonctionnalitï¿½ 'Paramï¿½trer le nombre de robots et d'obstacles sur la simulation' n'est pas implï¿½mentï¿½e.");
+						this.afficher_vue_voir_simulation(new ParametresSimulation("Simulation paramétrée", value_robot, value_obstacle));
 					}
 				}catch(Exception e){
 					this.afficher_fenetre_modale_d_erreur("Saisir un nombre valide de robots et d'obstacles !");
@@ -162,7 +156,7 @@ public class ControlleurAccueil {
 		fenetre_modale.getDialogPane().setPrefSize(640, 240);
 		fenetre_modale.showAndWait();
 	}
-	private void afficher_vue_voir_simulation() {
+	private void afficher_vue_voir_simulation(ParametresSimulation parametres_initiaux_simulation) {
 			initialiser_connecteur_kryo("127.0.0.1", 8073);
         	FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(App.class.getResource("vue/Simulation.fxml"));
@@ -181,13 +175,14 @@ public class ControlleurAccueil {
 			stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 				@Override
 				public void handle(WindowEvent event) {
-					System.out.println("il faut arrï¿½ter le calcul pour la simulation en cours");
+					System.out.println("il faut arrêter le calcul pour la simulation en cours");
 					connecteur_kryo.sendTCP(new ArreterSimulation());
 				}
 			});
 			stage.setScene(scene);
 			//ajouter l'ecouteur reseau adaptï¿½
             ControlleurSimulation controleur_affichage_simulation = loader.getController();
+            controleur_affichage_simulation.parametres_initiaux_simulation = parametres_initiaux_simulation;
             connecteur_kryo.addListener(new EcouteurReseauAffichageSimulation(controleur_affichage_simulation));
 			stage.show();
 	}
