@@ -10,7 +10,7 @@ import fr.univ.tlse2.sfr.communication.EtatCarte;
 import fr.univ.tlse2.sfr.communication.EtatRobot;
 
 import fr.univ.tlse2.sfr.communication.EtatSimulation;
-
+import fr.univ.tlse2.sfr.communication.ParametresSimulation;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -135,7 +135,7 @@ public class ControlleurSimulation {
 	}
 	
 	public void reagir_action_bouton_demarrer() {
-		DemarrerSimulation lancement_simu = new DemarrerSimulation("simulation");
+		DemarrerSimulation lancement_simu = new DemarrerSimulation(new ParametresSimulation("simulation", 10, 10));
 		this.connecteur_kryo.sendTCP(lancement_simu);
 	}
 	

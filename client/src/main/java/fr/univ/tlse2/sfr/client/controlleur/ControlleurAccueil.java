@@ -1,39 +1,29 @@
 package fr.univ.tlse2.sfr.client.controlleur;
 
-import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import java.io.File;
 import java.io.IOException;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
+
 import com.esotericsoftware.kryonet.Client;
+
 import fr.univ.tlse2.sfr.client.App;
 import fr.univ.tlse2.sfr.client.EcouteurReseau;
 import fr.univ.tlse2.sfr.client.EcouteurReseauAffichageSimulation;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import fr.univ.tlse2.sfr.communication.ArreterSimulation;
+import fr.univ.tlse2.sfr.communication.EnregistreurKryo;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
 import javafx.scene.control.RadioButton;
-import fr.univ.tlse2.sfr.communication.ArreterSimulation;
-import fr.univ.tlse2.sfr.communication.DemarrerSimulation;
-import fr.univ.tlse2.sfr.communication.EnregistreurKryo;
-import fr.univ.tlse2.sfr.communication.EtatCarte;
-import fr.univ.tlse2.sfr.communication.EtatRobot;
-import fr.univ.tlse2.sfr.communication.EtatSimulation;
+import javafx.scene.control.TextField;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 
 public class ControlleurAccueil {
@@ -59,11 +49,8 @@ public class ControlleurAccueil {
 	private TextField input_nb_obstacle;
 	@FXML
 	private Button parcourir;
-	
-	private ObservableList<EtatRobot> etat_robot_data = FXCollections.observableArrayList();
+
 	public static Client connecteur_kryo;
-	private List<EtatSimulation> buffer_etats_simulation;
-	private EtatCarte carte;
 	private Parent conteneur_racine;
 
 	/**
@@ -169,14 +156,17 @@ public class ControlleurAccueil {
 		fenetre_modale.showAndWait();
 	}
 	private void afficher_vue_voir_simulation() {
-			buffer_etats_simulation = Collections.synchronizedList(new LinkedList<EtatSimulation>());
 			initialiser_connecteur_kryo("127.0.0.1", 8073);
         	FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(App.class.getResource("vue/Simulation.fxml"));
 			try {
 				conteneur_racine = loader.load();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setTitle("Erreur");
+				alert.setHeaderText("Erreur lors de la lecture du fichier");
+				alert.setContentText("Impossible de lire le fichier vue/Simulation.fxml");
+				alert.showAndWait();
 				e.printStackTrace();
 			}
 			Scene scene = new Scene(conteneur_racine);
@@ -184,12 +174,12 @@ public class ControlleurAccueil {
 			stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 				@Override
 				public void handle(WindowEvent event) {
-					System.out.println("il faut stop le calcul pour la simulation en cours");
+					System.out.println("il faut arrêter le calcul pour la simulation en cours");
 					connecteur_kryo.sendTCP(new ArreterSimulation());
 				}
 			});
 			stage.setScene(scene);
-			//ajouter l'ecouteur reseau adaptÃ©
+			//ajouter l'ecouteur reseau adapté
             ControlleurSimulation controleur_affichage_simulation = loader.getController();
             connecteur_kryo.addListener(new EcouteurReseauAffichageSimulation(controleur_affichage_simulation));
 			stage.show();
@@ -209,7 +199,7 @@ public class ControlleurAccueil {
 	}
 	
 	private void definir_ecouteur_kryo() {
-		connecteur_kryo.addListener(new EcouteurReseau(buffer_etats_simulation));
+		connecteur_kryo.addListener(new EcouteurReseau());
 	}
 
 }
